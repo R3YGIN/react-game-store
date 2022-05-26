@@ -1,0 +1,82 @@
+.container {
+  display: flex;
+  font-size: 1vw;
+  height: 94vh;
+}
+
+.login__block,
+.register__block {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in;
+}
+
+.login__block {
+  background-color: #202020;
+}
+
+.login__block.active,
+.register__block.active {
+  flex: 1.2;
+}
+
+.box {
+  width: 50%;
+  margin: 1vw;
+  /* display: flex;
+  flex-direction: column; */
+  /* padding-top: 5vw; */
+}
+
+.title {
+  text-align: center;
+  color: #f5f5f5;
+  font-size: 2vw;
+  margin-bottom: 2vw;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: all 0.3s ease-out;
+  max-height: 0;
+  /* margin-bottom: 5vw; */
+}
+
+.form.active {
+  max-height: 1500px;
+}
+
+.input {
+  min-height: 3vw;
+  margin-bottom: 1vw;
+  padding: 0 1vw;
+  background-color: #373737;
+  color: #f5f5f5;
+  border-radius: 1vw;
+  border: none;
+  outline: none;
+}
+
+.btn {
+  width: 100%;
+  min-height: 3vw;
+  background-color: #0074e4;
+  border: none;
+  outline: none;
+  border-radius: 1vw;
+  color: #f5f5f5;
+  font-weight: 500;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #2e8ee7;
+}
+
+.btn.active {
+  display: none;
+}

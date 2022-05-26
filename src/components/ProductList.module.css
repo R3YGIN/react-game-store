@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+}
+
+.catalog {
+  /* width: 100%; */
+  flex: 5;
+}
+
+.products__container {
+  display: flex;
+  gap: 1vw;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-around;
+}

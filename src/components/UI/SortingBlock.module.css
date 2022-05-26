@@ -1,0 +1,105 @@
+.sort__container {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.sort__select {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.sort__title {
+  color: #777;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.sort__value {
+  display: flex;
+  align-items: center;
+  color: #f5f5f599;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.sort__valueName {
+}
+
+.sort__valueIcon {
+  display: flex;
+  align-items: center;
+
+  transition: all 0.25s;
+}
+
+.sort__select:hover .sort__value {
+  color: #f5f5f5;
+}
+.sort__select:hover .sort__title {
+  color: #f5f5f599;
+}
+
+.sort__drop {
+  position: absolute;
+  left: 0;
+  top: 60px;
+  background-color: #202020;
+  border-radius: 5px;
+  z-index: 3;
+
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s;
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 20px;
+}
+
+.sort__check:checked ~ .sort__drop {
+  max-height: 1000px;
+  padding: 20px;
+
+  -webkit-box-shadow: 3px 3px 20px 3px #000000;
+  box-shadow: 3px 3px 20px 3px #000000;
+}
+
+.sort__drop1 {
+  display: block;
+}
+.sort__drop2 {
+  display: flex;
+}
+
+.sort__check:checked ~ .sort__select .sort__valueIcon {
+  transform: rotate(180deg);
+}
+
+.sort__dropItem {
+  min-width: 150px;
+  cursor: pointer;
+  color: #777;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.3s;
+  padding: 10px 0;
+}
+
+.sort__dropItem:hover {
+  color: #f5f5f5;
+  text-decoration: underline;
+  background-color: #20202099;
+}
+
+.sort__dropItemCheck:checked ~ .sort__dropItemName {
+  color: #f5f5f5;
+  text-decoration: underline;
+}
