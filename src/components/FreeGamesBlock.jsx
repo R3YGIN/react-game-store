@@ -1,8 +1,9 @@
 import { CardGiftcard } from "@mui/icons-material";
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./FreeGamesBlock.module.css";
 
-const FreeGamesBlock = () => {
+const FreeGamesBlock = ({ freeGame }) => {
   return (
     <section className={styles.free_block}>
       <div className={styles.title__block}>
@@ -19,25 +20,32 @@ const FreeGamesBlock = () => {
         </div>
       </div>
       <div className={styles.game__block}>
-        <div className={styles.free__game}>
+        {/* freeGame */}
+        <Link
+          to={`product/${freeGame.productSlug}`}
+          className={styles.free__game}
+        >
           <div className={styles.game__img}>
             <img
-              src="http://unsplash.it/1920/450"
-              alt="Free Game"
+              src={freeGame.img}
               className={styles.img}
+              loading="lazy"
+              alt="Free Game"
             />
             <div className={styles.game__message}>Сейчас бесплатно</div>
           </div>
           <div className={styles.game__info}>
-            <div className={styles.game__title}>Borderlands 3</div>
+            <div className={styles.game__title}>{freeGame.title}</div>
             <div className={styles.game__desc}>Бесплатно до 15 июня</div>
           </div>
-        </div>
+        </Link>
+        {/* freeGame */}
         <div className={styles.free__game}>
           <div className={styles.game__img}>
             <img
               src="http://unsplash.it/1920/450"
               alt="Free Game"
+              loading="lazy"
               className={styles.img}
             />
             <div

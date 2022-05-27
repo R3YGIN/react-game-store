@@ -1,11 +1,10 @@
 .contaier {
   flex: 1;
-  border-radius: 5px;
   overflow: hidden;
-  min-width: 20%;
-  max-width: 25%;
+  min-width: 23%;
+  max-width: 23%;
 
-  margin-bottom: 50px;
+  margin-bottom: 3vw;
 }
 
 .product {
@@ -15,7 +14,7 @@
 
 .product__imgContainer {
   width: 100%;
-  height: calc(100vw / 5);
+  height: 20vw;
   border-radius: 5px;
   overflow: hidden;
   position: relative;

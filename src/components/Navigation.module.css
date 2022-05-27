@@ -65,7 +65,8 @@
 }
 
 .nav__link {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   padding: 1vw;
   color: #777;
   transition: color 0.3s;
@@ -80,4 +81,14 @@
   padding: 1vw;
   color: #f5f5f5;
   transition: color 0.3s;
+  display: flex;
+  align-items: center;
+}
+
+.cart__quantity {
+  color: #121212;
+  background-color: #f5f5f5;
+  margin-left: 0.5vw;
+  padding: 0.25vw 0.5vw;
+  border-radius: 0.75vw;
 }

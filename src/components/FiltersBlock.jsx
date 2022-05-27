@@ -2,7 +2,7 @@ import { KeyboardArrowDown, Search } from "@mui/icons-material";
 import React from "react";
 import styles from "./FiltersBlock.module.css";
 
-const FiltersBlock = ({ accordions, search, setSearch, setFilter }) => {
+const FiltersBlock = ({ filters, search, setSearch, setFilter }) => {
   return (
     <aside className={styles.filter__block}>
       <div className={styles.filter__title}>Фильтры</div>
@@ -19,7 +19,7 @@ const FiltersBlock = ({ accordions, search, setSearch, setFilter }) => {
         />
       </div>
 
-      {accordions?.map((item) => (
+      {filters?.map((item) => (
         <div className={styles.accordion} key={item.id}>
           <hr className={styles.accordion__line} />
           <input

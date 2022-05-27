@@ -28,20 +28,20 @@
   font-size: 0.9vw;
 }
 
-.cat__blockTitle {
+.cat__title {
   font-weight: 500;
   color: #777;
   margin-bottom: 0.5vw;
 }
 
-.cat__blockText {
+.cat__textContainer {
   color: #f5f5f5;
 }
 
-.cat__blockText span {
+.cat__text {
   text-decoration: underline;
 }
-.cat__blockText span:hover {
+.cat__text:hover {
   text-decoration: none;
 }
 

@@ -3,14 +3,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Thumbs, Mousewheel, Autoplay } from "swiper";
 import styles from "./BigSlider.module.css";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+import { mainSlider } from "../data.js";
 
-const slides = [
-  "https://picsum.photos/1920/1080",
-  "https://picsum.photos/1920/1081",
-  "https://picsum.photos/1920/1082",
-  "https://picsum.photos/1920/1083",
-  "https://picsum.photos/1920/1084",
-];
 const BigSlider = () => {
   const [imagesNavSlider, setImagesNavSlider] = useState(null);
   return (
@@ -41,11 +35,11 @@ const BigSlider = () => {
             className={styles.swiper__container2}
             modules={[Navigation, Thumbs, Autoplay]}
           >
-            {slides.map((slide, index) => {
+            {mainSlider.map((slide, index) => {
               return (
                 <SwiperSlide key={index}>
                   <div className={styles.slider__image}>
-                    <img src={slide} alt="" />
+                    <img src={slide} loading="lazy" alt="slide" />
                   </div>
                 </SwiperSlide>
               );
@@ -82,11 +76,11 @@ const BigSlider = () => {
               }}
               modules={[Navigation, Thumbs, Autoplay, Mousewheel]}
             >
-              {slides.map((slide, index) => {
+              {mainSlider.map((slide, index) => {
                 return (
                   <SwiperSlide key={index}>
                     <div className={styles.slider__image}>
-                      <img src={slide} alt="" />
+                      <img src={slide} loading="lazy" alt="slide" />
                     </div>
                   </SwiperSlide>
                 );

@@ -1,55 +1,36 @@
-import React, { useId, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { filters, productsData } from "../data";
 import FiltersBlock from "./FiltersBlock";
 import ProductCard from "./ProductCard";
 import styles from "./ProductList.module.css";
 import SortingBlock from "./UI/SortingBlock";
 
 const ProductList = () => {
-  const accordions = [
-    {
-      id: useId(),
-      name: "ЦЕНА",
-      details: [
-        "Бесплатно",
-        "Ниже 300 руб",
-        "Ниже 1000 руб",
-        "Ниже 3000 руб",
-        "3000 руб и выше",
-        "Со скидкой",
-      ],
-    },
-    {
-      id: useId(),
-      name: "ЖАНР",
-      details: [
-        "Викторина",
-        "Выживание",
-        "Головоломка",
-        "Гонки",
-        "Групповая",
-        "Инди",
-        "Исследования",
-        "Казуальная",
-        "От первого лица",
-        "Открытый мир",
-        "Приключения",
-        "Ролевая",
-        "Симулятор",
-        "Стелс",
-        "Стратегия",
-        "Хоррор",
-        "Шутер",
-        "Экшен",
-      ],
-    },
-  ];
-
   // Products
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   // Sort
-  const [sort, setSort] = useState("default");
+  const [sort, setSort] = useState("");
+
+  useEffect(() => {
+    if (sort === "newest") {
+      setFilteredProducts(
+        [...productsData].sort((a, b) => a.createdAt - b.createdAt)
+      );
+    } else if (sort === "price") {
+      // setFilteredProducts([...productsData].sort((a, b) => b.price - a.price));
+      setFilteredProducts(
+        [...productsData].sort(
+          (a, b) =>
+            (b.sale ? b.price - (b.price * b.sale) / 100 : b.price) -
+            (a.sale ? a.price - (a.price * a.sale) / 100 : a.price)
+        )
+      );
+    } else {
+      setFilteredProducts(productsData);
+    }
+  }, [sort]);
 
   //Search
   const [search, setSearch] = useState("");
@@ -65,20 +46,14 @@ const ProductList = () => {
       <section className={styles.catalog}>
         <SortingBlock sort={sort} setSort={setSort} />
         <div className={styles.products__container}>
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {filteredProducts.map((item) => (
+            <ProductCard item={item} key={item.id} />
+          ))}
         </div>
       </section>
 
       <FiltersBlock
-        accordions={accordions}
+        filters={filters}
         search={search}
         setSearch={setSearch}
         setFilter={setFilter}
