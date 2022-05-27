@@ -2,8 +2,11 @@ import { Search } from "@mui/icons-material";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./Navigation.module.css";
+import { useSelector } from "react-redux";
 
 const Navigation = () => {
+  const cart = useSelector((state) => state.cart);
+
   return (
     <section className={styles.navigation}>
       <div className={styles.flex__group}>
@@ -71,6 +74,9 @@ const Navigation = () => {
                 }
               >
                 <p>Корзина</p>
+                {cart.quantity > 0 ? (
+                  <span className={styles.cart__quantity}>{cart.quantity}</span>
+                ) : null}
               </NavLink>
             </li>
           </ul>

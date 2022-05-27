@@ -3,8 +3,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import styles from "./ProductListSwiper.module.css";
 import TopListSwiper from "./UI/TopListSwiper";
+import Discount from "./UI/Discount";
+import { Link } from "react-router-dom";
+import { calcDiscount } from "../data";
 
-const ProductListSwiper = ({ title }) => {
+const ProductListSwiper = ({ title, products }) => {
   return (
     <section className={styles.container}>
       <hr style={{ backgroundColor: "#333", height: "1px", border: "none" }} />
@@ -36,142 +39,43 @@ const ProductListSwiper = ({ title }) => {
         modules={[Navigation]}
         className={styles.mySwiper}
       >
-        <SwiperSlide>
-          <div className={styles.slide}>
-            <a href="#">
-              <div className={styles.slide__imgContainer}>
-                <img
-                  className={styles.slide__img}
-                  src="http://unsplash.it/500/800"
-                  alt="slide"
-                />
-              </div>
-              <div className={styles.slide__titleContainer}>
-                <span className={styles.slide__title}>
-                  Far Cry 6 osidnfosidnvs77777777777777777
-                </span>
-              </div>
-              <div className={styles.slide__priceContainer}>
-                <div className={styles.slide__discount}>
-                  <span>-50 %</span>
+        {products.map((item) => (
+          <SwiperSlide key={item.id}>
+            <div className={styles.slide}>
+              <Link to={`product/${item.productSlug}`}>
+                <div className={styles.slide__imgContainer}>
+                  <img
+                    className={styles.slide__img}
+                    src={item.img}
+                    loading="lazy"
+                    alt="slide"
+                  />
                 </div>
-                <div className={styles.slide__priceBlock}>
-                  <div className={styles.slide__oldPrice}>2000 руб.</div>
-                  <div className={styles.slide__price}>1000 руб.</div>
+                <div className={styles.slide__titleContainer}>
+                  <span className={styles.slide__title}>{item.title}</span>
                 </div>
-              </div>
-            </a>
-          </div>
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <div className={styles.slide}>
-            <a href="#">
-              <div className={styles.slide__imgContainer}>
-                <img
-                  className={styles.slide__img}
-                  src="http://unsplash.it/500/800"
-                  alt="slide"
-                />
-              </div>
-              <div className={styles.slide__titleContainer}>
-                <span className={styles.slide__title}>
-                  Far Cry 6 osidnfosidnvs77777777777777777
-                </span>
-              </div>
-              <div className={styles.slide__priceContainer}>
-                <div className={styles.slide__discount}>
-                  <span>-50 %</span>
+                <div className={styles.slide__priceContainer}>
+                  {item.sale ? <Discount discount={item.sale} /> : null}
+                  <div className={styles.slide__priceBlock}>
+                    {item.sale ? (
+                      <div className={styles.slide__oldPrice}>
+                        {item.price} руб.
+                      </div>
+                    ) : null}
+                    <div className={styles.slide__price}>
+                      {item.price === 0
+                        ? "Бесплатно"
+                        : item.sale
+                        ? calcDiscount(item.price, item.sale)
+                        : item.price}
+                      {item.price === 0 ? "" : " руб."}
+                    </div>
+                  </div>
                 </div>
-                <div className={styles.slide__priceBlock}>
-                  <div className={styles.slide__oldPrice}>2000 руб.</div>
-                  <div className={styles.slide__price}>1000 руб.</div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className={styles.slide}>
-            <a href="#">
-              <div className={styles.slide__imgContainer}>
-                <img
-                  className={styles.slide__img}
-                  src="http://unsplash.it/500/800"
-                  alt="slide"
-                />
-              </div>
-              <div className={styles.slide__titleContainer}>
-                <span className={styles.slide__title}>
-                  Far Cry 6 osidnfosidnvs77777777777777777
-                </span>
-              </div>
-              <div className={styles.slide__priceContainer}>
-                <div className={styles.slide__discount}>
-                  <span>-50 %</span>
-                </div>
-                <div className={styles.slide__priceBlock}>
-                  <div className={styles.slide__oldPrice}>2000 руб.</div>
-                  <div className={styles.slide__price}>1000 руб.</div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className={styles.slide}>
-            <a href="#">
-              <div className={styles.slide__imgContainer}>
-                <img
-                  className={styles.slide__img}
-                  src="http://unsplash.it/500/800"
-                  alt="slide"
-                />
-              </div>
-              <div className={styles.slide__titleContainer}>
-                <span className={styles.slide__title}>
-                  Far Cry 6 osidnfosidnvs77777777777777777
-                </span>
-              </div>
-              <div className={styles.slide__priceContainer}>
-                <div className={styles.slide__discount}>
-                  <span>-50 %</span>
-                </div>
-                <div className={styles.slide__priceBlock}>
-                  <div className={styles.slide__oldPrice}>2000 руб.</div>
-                  <div className={styles.slide__price}>1000 руб.</div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className={styles.slide}>
-            <a href="#">
-              <div className={styles.slide__imgContainer}>
-                <img
-                  className={styles.slide__img}
-                  src="http://unsplash.it/500/800"
-                  alt="slide"
-                />
-              </div>
-              <div className={styles.slide__titleContainer}>
-                <span className={styles.slide__title}>
-                  Far Cry 6 osidnfosidnvs77777777777777777
-                </span>
-              </div>
-              <div className={styles.slide__priceContainer}>
-                <div className={styles.slide__discount}>
-                  <span>-50 %</span>
-                </div>
-                <div className={styles.slide__priceBlock}>
-                  <div className={styles.slide__oldPrice}>2000 руб.</div>
-                  <div className={styles.slide__price}>1000 руб.</div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </SwiperSlide>
+              </Link>
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </section>
   );

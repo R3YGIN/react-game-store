@@ -9,9 +9,10 @@ const InfoBlock = () => {
         <Link to="catalog">
           <div className={styles.info__imgContainer}>
             <img
-              src="http://unsplash.it/1000/500"
-              alt="Info img"
               className={styles.info__img}
+              src="http://unsplash.it/1000/500"
+              loading="lazy"
+              alt="Info img"
             />
           </div>
         </Link>

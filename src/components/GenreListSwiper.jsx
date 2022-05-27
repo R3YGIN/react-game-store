@@ -3,6 +3,8 @@ import TopListSwiper from "./UI/TopListSwiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import styles from "./GenreListSwiper.module.css";
+import { genreListSlides } from "../data";
+import { Link } from "react-router-dom";
 
 const GenreListSwiper = () => {
   return (
@@ -33,71 +35,25 @@ const GenreListSwiper = () => {
         modules={[Navigation]}
         className={styles.mySwiper}
       >
-        <SwiperSlide>
-          <div className={styles.slide}>
-            <a href="#">
-              <div className={styles.slide__imgContainer}>
-                <img
-                  src="http://unsplash.it/500/300"
-                  alt="Genre img"
-                  className={styles.slide__img}
-                />
-              </div>
-              <div className={styles.slide__titleContainer}>
-                <span className={styles.slide__title}>Экшен</span>
-              </div>
-            </a>
-          </div>
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <div className={styles.slide}>
-            <a href="#">
-              <div className={styles.slide__imgContainer}>
-                <img
-                  src="http://unsplash.it/500/300"
-                  alt="Genre img"
-                  className={styles.slide__img}
-                />
-              </div>
-              <div className={styles.slide__titleContainer}>
-                <div className={styles.slide__title}>Казуальная</div>
-              </div>
-            </a>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className={styles.slide}>
-            <a href="#">
-              <div className={styles.slide__imgContainer}>
-                <img
-                  src="http://unsplash.it/500/300"
-                  alt="Genre img"
-                  className={styles.slide__img}
-                />
-              </div>
-              <div className={styles.slide__titleContainer}>
-                <div className={styles.slide__title}>Хоррор</div>
-              </div>
-            </a>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className={styles.slide}>
-            <a href="#">
-              <div className={styles.slide__imgContainer}>
-                <img
-                  src="http://unsplash.it/500/300"
-                  alt="Genre img"
-                  className={styles.slide__img}
-                />
-              </div>
-              <div className={styles.slide__titleContainer}>
-                <div className={styles.slide__title}>Инди</div>
-              </div>
-            </a>
-          </div>
-        </SwiperSlide>
+        {genreListSlides.map((item) => (
+          <SwiperSlide key={item.id}>
+            <div className={styles.slide}>
+              <Link to={item.link}>
+                <div className={styles.slide__imgContainer}>
+                  <img
+                    src={item.img}
+                    className={styles.slide__img}
+                    loading="lazy"
+                    alt="Genre img"
+                  />
+                </div>
+                <div className={styles.slide__titleContainer}>
+                  <span className={styles.slide__title}>{item.name}</span>
+                </div>
+              </Link>
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </section>
   );

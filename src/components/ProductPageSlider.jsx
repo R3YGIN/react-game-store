@@ -4,7 +4,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation, Thumbs } from "swiper";
 import SwiperBtn from "./UI/SwiperBtn";
 
-const ProductPageSlider = () => {
+const ProductPageSlider = ({ product }) => {
+  const { slider } = product;
+
   return (
     <div className={styles.slider}>
       <Swiper
@@ -21,94 +23,16 @@ const ProductPageSlider = () => {
         className={styles.slider__containerBig}
       >
         {/* slide */}
-        <SwiperSlide className={styles.slide__big}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="slide"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__big}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="slide"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__big}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="slide"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__big}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="slide"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__big}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="slide"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__big}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="slide"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__big}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="slide"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__big}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="slide"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__big}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="slide"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__big}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="slide"
-          />
-        </SwiperSlide>
+        {slider.map((item, i) => (
+          <SwiperSlide key={item + i} className={styles.slide__big}>
+            <img
+              className={styles.slider__img}
+              src={item}
+              loading="lazy"
+              alt="slide"
+            />
+          </SwiperSlide>
+        ))}
         {/* slide */}
       </Swiper>
 
@@ -125,94 +49,16 @@ const ProductPageSlider = () => {
         className={styles.slider__containerThumb}
       >
         {/* slide */}
-        <SwiperSlide className={styles.slide__thumb}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="thumb"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__thumb}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="thumb"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__thumb}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="thumb"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__thumb}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="thumb"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__thumb}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="thumb"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__thumb}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="thumb"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__thumb}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="thumb"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__thumb}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="thumb"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__thumb}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="thumb"
-          />
-        </SwiperSlide>
-        {/* slide */}
-        {/* slide */}
-        <SwiperSlide className={styles.slide__thumb}>
-          <img
-            className={styles.slider__img}
-            src="http://unsplash.it/1400/800"
-            alt="thumb"
-          />
-        </SwiperSlide>
+        {slider.map((item, i) => (
+          <SwiperSlide key={item + i} className={styles.slide__thumb}>
+            <img
+              className={styles.slider__img}
+              src={item}
+              loading="lazy"
+              alt="thumb"
+            />
+          </SwiperSlide>
+        ))}
         {/* slide */}
       </Swiper>
 
