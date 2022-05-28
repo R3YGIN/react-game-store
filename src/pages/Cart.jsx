@@ -26,7 +26,7 @@ const Cart = () => {
             <div className={styles.cart__products}>
               {/* ----Product */}
               {cart.products.map((item) => (
-                <div className={styles.cart__product} key={item.id}>
+                <div className={styles.cart__product} key={item._id}>
                   <Link
                     to={`/product/${item.productSlug}`}
                     className={styles.cart__imgContainer}

@@ -4,15 +4,22 @@ import styles from "./ProductPageSidebar.module.css";
 import Discount from "./UI/Discount";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../redux/cartRedux";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { calcDiscount } from "../data";
 
 const ProductPageSidebar = ({ product }) => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.cart.products);
+  const user = useSelector((state) => state.user.currentUser);
+
+  const navigate = useNavigate();
 
   const handleAddToCart = () => {
-    dispatch(addProduct(product));
+    user ? dispatch(addProduct(product)) : navigate("/login");
+  };
+
+  const handleBuyNow = () => {
+    user ? console.log("buy") : navigate("/login");
   };
 
   const library = false;
@@ -63,7 +70,10 @@ const ProductPageSidebar = ({ product }) => {
         </div>
         {/* ) : ( */}
         <>
-          <div className={styles.buy__now + " " + styles.btn}>
+          <div
+            className={styles.buy__now + " " + styles.btn}
+            onClick={handleBuyNow}
+          >
             Купить сейчас
           </div>
 

@@ -190,6 +190,9 @@
 
 .account__link {
   display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 1vw;
   white-space: nowrap;
   color: #cccccc;

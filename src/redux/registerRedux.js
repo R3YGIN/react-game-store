@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const registerSlice = createSlice({
   name: "register",
   initialState: {
-    newUser: [],
+    // newUser: [],
+    newUser: null,
     isFetching: false,
     error: false,
   },
@@ -15,7 +16,8 @@ const registerSlice = createSlice({
     },
     registerSuccess: (state, action) => {
       state.isFetching = false;
-      state.newUser.push(action.payload);
+      // state.newUser.push(action.payload);
+      state.newUser = action.payload;
     },
     registerFailure: (state) => {
       state.isFetching = false;

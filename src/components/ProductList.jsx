@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { filters, productsData } from "../data";
+import { publicRequest } from "../requestMethods";
 import FiltersBlock from "./FiltersBlock";
 import ProductCard from "./ProductCard";
 import styles from "./ProductList.module.css";
@@ -13,42 +14,53 @@ const ProductList = () => {
   // Sort
   const [sort, setSort] = useState("");
 
+  //Filter
+  const [filter, setFilter] = useState("");
+
+  //Search
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const res = await publicRequest.get("/products");
+        setProducts(res.data);
+        console.log(res.data);
+      } catch (err) {}
+    };
+    getProducts();
+  }, [filter]);
+
   useEffect(() => {
     if (sort === "newest") {
       setFilteredProducts(
-        [...productsData].sort((a, b) => a.createdAt - b.createdAt)
+        [...products].sort((a, b) => a.createdAt - b.createdAt)
       );
     } else if (sort === "price") {
-      // setFilteredProducts([...productsData].sort((a, b) => b.price - a.price));
       setFilteredProducts(
-        [...productsData].sort(
+        [...products].sort(
           (a, b) =>
             (b.sale ? b.price - (b.price * b.sale) / 100 : b.price) -
             (a.sale ? a.price - (a.price * a.sale) / 100 : a.price)
         )
       );
     } else {
-      setFilteredProducts(productsData);
+      setFilteredProducts(products);
     }
-  }, [sort]);
-
-  //Search
-  const [search, setSearch] = useState("");
-  console.log(search);
-
-  //Filter
-  const [filter, setFilter] = useState("");
-
-  console.log("render");
+  }, [products, sort]);
 
   return (
     <div className={styles.container}>
       <section className={styles.catalog}>
         <SortingBlock sort={sort} setSort={setSort} />
         <div className={styles.products__container}>
-          {filteredProducts.map((item) => (
-            <ProductCard item={item} key={item.id} />
-          ))}
+          {sort
+            ? filteredProducts.map((item) => (
+                <ProductCard item={item} key={item._id} />
+              ))
+            : products.map((item) => (
+                <ProductCard item={item} key={item._id} />
+              ))}
         </div>
       </section>
 

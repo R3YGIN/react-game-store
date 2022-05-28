@@ -36,7 +36,7 @@ const Navigation = () => {
             </li>
             <li>
               <NavLink
-                to="catalog"
+                to="/catalog"
                 className={({ isActive }) =>
                   isActive ? styles.nav__link_active : styles.nav__link
                 }
@@ -46,7 +46,7 @@ const Navigation = () => {
             </li>
             <li>
               <NavLink
-                to="news"
+                to="/news"
                 className={({ isActive }) =>
                   isActive ? styles.nav__link_active : styles.nav__link
                 }
@@ -58,7 +58,7 @@ const Navigation = () => {
           <ul className={styles.nav__list2}>
             <li>
               <NavLink
-                to="wishlist"
+                to="/wishlist"
                 className={({ isActive }) =>
                   isActive ? styles.nav__link_active : styles.nav__link
                 }
@@ -68,7 +68,7 @@ const Navigation = () => {
             </li>
             <li>
               <NavLink
-                to="cart"
+                to="/cart"
                 className={({ isActive }) =>
                   isActive ? styles.nav__link_active : styles.nav__link
                 }

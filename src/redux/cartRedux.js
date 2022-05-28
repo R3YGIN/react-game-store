@@ -11,9 +11,15 @@ const cartSlice = createSlice({
     subtotal: 0,
   },
   reducers: {
+    getCartStart: (state, action) => {
+      state.isFetching = true;
+    },
+    getCartSuccess: (state, action) => {},
+    getCartFailure: (state, action) => {},
     addProduct: (state, action) => {
       state.products.push(action.payload);
-      state.quantity += 1;
+      // state.quantity += 1;
+      state.quantity = state.products.length;
       state.price += action.payload.price;
       state.discount += Math.round(
         (action.payload.price * action.payload.sale) / 100
@@ -27,7 +33,8 @@ const cartSlice = createSlice({
       state.products = state.products.filter(
         (item) => item.productSlug !== action.payload.productSlug
       );
-      state.quantity = state.quantity > 0 ? state.quantity - 1 : 0;
+      // state.quantity = state.quantity > 0 ? state.quantity - 1 : 0;
+      state.quantity = state.products.length;
       state.price -= action.payload.price;
       state.discount -= Math.round(
         (action.payload.price * action.payload.sale) / 100
@@ -37,7 +44,7 @@ const cartSlice = createSlice({
       //   (action.payload.price * action.payload.sale) / 100;
       state.subtotal -= calcDiscount(action.payload.price, action.payload.sale);
     },
-    reset: (state) => {
+    clearCart: (state) => {
       state.products = [];
       state.discount = 0;
       state.quantity = 0;
@@ -47,5 +54,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addProduct, deleteProduct, reset } = cartSlice.actions;
+export const { addProduct, deleteProduct, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

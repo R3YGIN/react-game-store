@@ -35,10 +35,12 @@ const Footer = () => {
           </ul>
         </div>
         <div className={styles.footer_upBtn}>
-          <ArrowCircleUp
-            className={styles.social__icon}
-            style={{ fontSize: "75px" }}
-          />
+          <a href="#header">
+            <ArrowCircleUp
+              className={styles.social__icon}
+              style={{ fontSize: "75px" }}
+            />
+          </a>
         </div>
       </div>
       <div>

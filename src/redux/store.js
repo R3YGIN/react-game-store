@@ -15,7 +15,7 @@ import {
 import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
-  key: "root",
+  key: "game-store",
   version: 1,
   storage,
 };
@@ -38,4 +38,4 @@ export const store = configureStore({
     }),
 });
 
-// export let persistor = persistStore(store);
+export let persistor = persistStore(store);

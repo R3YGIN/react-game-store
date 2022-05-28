@@ -80,3 +80,9 @@
 .btn.active {
   display: none;
 }
+
+.error {
+  color: rgb(226, 89, 89);
+  text-align: center;
+  padding: 1vw;
+}

@@ -3,17 +3,17 @@ export const calcDiscount = (price, sale) =>
 
 export const sorting = [
   {
-    id: "sorting111",
+    id: "sorting111fwe",
     name: "По умолчанию",
     value: "default",
   },
   {
-    id: "sorting222",
+    id: "sorting222ascv",
     name: "По цене",
     value: "price",
   },
   {
-    id: "sorting333",
+    id: "sorting333wabs",
     name: "По дате",
     value: "newest",
   },

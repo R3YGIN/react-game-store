@@ -5,6 +5,7 @@ import {
   registerSuccess,
   registerFailure,
 } from "./registerRedux";
+import { clearCart } from "./cartRedux";
 
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
@@ -18,6 +19,7 @@ export const login = async (dispatch, user) => {
 
 export const logoutFunc = async (dispatch) => {
   dispatch(logout());
+  dispatch(clearCart());
 };
 
 export const register = async (dispatch, newUser) => {
@@ -25,6 +27,8 @@ export const register = async (dispatch, newUser) => {
   try {
     const res = await publicRequest.post(`/auth/register/`, newUser);
     dispatch(registerSuccess(res.data));
+    // AutoLogin
+    login(dispatch, { username: newUser.username, password: newUser.password });
   } catch (err) {
     dispatch(registerFailure());
   }
