@@ -24,10 +24,12 @@ const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    login(dispatch, { username, password });
-  };
+  const handleClick = !isFetching
+    ? (e) => {
+        e.preventDefault();
+        login(dispatch, { username, password });
+      }
+    : null;
 
   //REGISTER
   const [inputs, setInputs] = useState({});
@@ -38,11 +40,13 @@ const LoginPage = () => {
     });
   };
 
-  const handleClickRegister = async (e) => {
-    e.preventDefault();
-    const newUser = { ...inputs };
-    await register(dispatch, newUser);
-  };
+  const handleClickRegister = !isFetching
+    ? async (e) => {
+        e.preventDefault();
+        const newUser = { ...inputs };
+        await register(dispatch, newUser);
+      }
+    : null;
 
   return (
     <>

@@ -4,18 +4,39 @@ import styles from "./Cart.module.css";
 import Discount from "../components/UI/Discount";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct } from "../redux/cartRedux";
 import { Check } from "@mui/icons-material";
 import { calcDiscount } from "../data";
+import { currentUser } from "../requestMethods";
+import { updateCart } from "../redux/apiCalls";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user.currentUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleDeleteFromCart = (item) => {
-    dispatch(deleteProduct(item));
+  const updatedCartData = {
+    userId: currentUser?._id,
+    products: cart.products.length
+      ? [
+          ...cart.products.map((item) => ({
+            productId: item._id,
+            productSlug: item.productSlug,
+          })),
+        ]
+      : [],
   };
+  console.log("DATA CART", updatedCartData);
+
+  const handleDeleteFromCart = !cart.isFetching
+    ? async (e) => {
+        updatedCartData.products = await updatedCartData.products?.filter(
+          (item) => item.productSlug !== e.target.dataset.product
+        );
+        console.log(updatedCartData);
+        await updateCart(dispatch, cart.id, updatedCartData, currentUser);
+      }
+    : null;
 
   return (
     <section>
@@ -83,7 +104,8 @@ const Cart = () => {
                       </Link>
                       <button
                         className={styles.cart__btn}
-                        onClick={() => handleDeleteFromCart(item)}
+                        data-product={item.productSlug}
+                        onClick={(e) => handleDeleteFromCart(e)}
                       >
                         Удалить
                       </button>

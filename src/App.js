@@ -6,9 +6,12 @@ import Cart from "./pages/Cart";
 import ProductPage from "./pages/ProductPage";
 import LoginPage from "./pages/LoginPage";
 import { useSelector } from "react-redux";
+import { currentUser } from "./requestMethods";
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
+  const cart = useSelector((state) => state.cart.id);
+  if (user && cart && !currentUser) window.location.reload(); //Найти другой метод
 
   return (
     <BrowserRouter>

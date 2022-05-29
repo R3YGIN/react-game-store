@@ -4,19 +4,44 @@ import styles from "./ProductPageSidebar.module.css";
 import Discount from "./UI/Discount";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../redux/cartRedux";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { updateCart } from "../redux/apiCalls";
+import { Link, useNavigate } from "react-router-dom";
 import { calcDiscount } from "../data";
+import { currentUser } from "../requestMethods";
+import { CircularProgress } from "@mui/material";
 
 const ProductPageSidebar = ({ product }) => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.cart.products);
   const user = useSelector((state) => state.user.currentUser);
+  const cart = useSelector((state) => state.cart);
+  const { isFetching } = useSelector((state) => state.cart);
 
   const navigate = useNavigate();
 
-  const handleAddToCart = () => {
-    user ? dispatch(addProduct(product)) : navigate("/login");
+  const updatedCartData = {
+    userId: currentUser?._id,
+    products: [
+      ...cart.products.map((item) => ({
+        productId: item._id,
+        productSlug: item.productSlug,
+      })),
+      {
+        productId: product?._id,
+        productSlug: product?.productSlug,
+      },
+    ],
   };
+
+  console.log("PUT", updatedCartData);
+
+  const handleAddToCart = !isFetching
+    ? () => {
+        user
+          ? updateCart(dispatch, cart.id, updatedCartData, currentUser)
+          : navigate("/login");
+      }
+    : null;
 
   const handleBuyNow = () => {
     user ? console.log("buy") : navigate("/login");
@@ -50,8 +75,7 @@ const ProductPageSidebar = ({ product }) => {
           {product.price === 0
             ? "Бесплатно"
             : product.sale
-            ? // ? product.price - (product.price * product.sale) / 100
-              calcDiscount(product.price, product.sale)
+            ? calcDiscount(product.price, product.sale)
             : product.price}
           {product.price === 0 ? "" : " руб."}
         </div>
@@ -70,24 +94,30 @@ const ProductPageSidebar = ({ product }) => {
         </div>
         {/* ) : ( */}
         <>
-          <div
+          <button
             className={styles.buy__now + " " + styles.btn}
+            disabled={isFetching}
             onClick={handleBuyNow}
           >
             Купить сейчас
-          </div>
+          </button>
 
           {products.some((item) => item.productSlug === product.productSlug) ? (
             <Link to="/cart" className={styles.cart + " " + styles.btn}>
               Посмотреть в корзине
             </Link>
           ) : (
-            <div
+            <button
               className={styles.cart + " " + styles.btn}
+              disabled={isFetching}
               onClick={handleAddToCart}
             >
-              Добавить в корзину
-            </div>
+              {isFetching ? (
+                <CircularProgress style={{ width: "1.5vw", height: "1.5vw" }} />
+              ) : (
+                "Добавить в корзину"
+              )}
+            </button>
           )}
         </>
         {/* )} */}

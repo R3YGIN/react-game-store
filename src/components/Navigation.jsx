@@ -56,7 +56,7 @@ const Navigation = () => {
             </li>
           </ul>
           <ul className={styles.nav__list2}>
-            <li>
+            {/* <li>
               <NavLink
                 to="/wishlist"
                 className={({ isActive }) =>
@@ -65,7 +65,7 @@ const Navigation = () => {
               >
                 <p>Список желаемого</p>
               </NavLink>
-            </li>
+            </li> */}
             <li>
               <NavLink
                 to="/cart"

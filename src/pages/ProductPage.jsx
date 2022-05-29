@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProductPageDetails from "../components/ProductPageDetails";
 import PageTitle from "../components/UI/PageTitle";
-import { productsData } from "../data";
 import { publicRequest } from "../requestMethods";
 
 const ProductPage = () => {

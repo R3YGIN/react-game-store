@@ -59,11 +59,11 @@ export const filters = [
 ];
 
 export const mainSlider = [
-  "https://picsum.photos/1920/1080",
-  "https://picsum.photos/1920/1081",
-  "https://picsum.photos/1920/1082",
-  "https://picsum.photos/1920/1083",
-  "https://picsum.photos/1920/1084",
+  "https://loremflickr.com/1920/1080/assassins",
+  "https://loremflickr.com/1920/1081/assassins",
+  "https://loremflickr.com/1920/1082/assassins",
+  "https://loremflickr.com/1920/1083/assassins",
+  "https://loremflickr.com/1920/1084/assassins",
 ];
 
 export const genreListSlides = [
