@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PageTitle from "../components/UI/PageTitle";
 import styles from "./Cart.module.css";
 import Discount from "../components/UI/Discount";
@@ -6,8 +6,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Check } from "@mui/icons-material";
 import { calcDiscount } from "../data";
-import { currentUser } from "../requestMethods";
-import { updateCart } from "../redux/apiCalls";
+import { currentUser, userRequest } from "../requestMethods";
+import { purchase, updateCart, userCart } from "../redux/apiCalls";
+import StripeCheckout from "react-stripe-checkout";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
@@ -15,6 +16,7 @@ const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // Удаление из карзины
   const updatedCartData = {
     userId: currentUser?._id,
     products: cart.products.length
@@ -26,7 +28,40 @@ const Cart = () => {
         ]
       : [],
   };
-  console.log("DATA CART", updatedCartData);
+
+  // Оплата
+  const KEY = process.env.REACT_APP_STRIPE;
+  const [stripeToken, setStripeToken] = useState(null);
+
+  const onToken = (token) => {
+    setStripeToken(token);
+  };
+
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const res = await userRequest.post("/checkout/payment", {
+          tokenId: stripeToken.id,
+          amount: cart.subtotal * 100,
+        });
+        purchase(
+          dispatch,
+          {
+            userId: currentUser._id,
+            products: [...cart.info], //В массив передаем инфу о продукте/продуктах
+            amount: cart.subtotal,
+          },
+          cart,
+          currentUser
+        );
+        setStripeToken(null);
+        console.log("ОПЛАТА ПРОШЛА УСПЕШНО -", res.data);
+      } catch (err) {
+        console.log("ОШИБКА ОПЛАТЫ -", err);
+      }
+    };
+    stripeToken && makeRequest();
+  }, [stripeToken]);
 
   const handleDeleteFromCart = !cart.isFetching
     ? async (e) => {
@@ -167,7 +202,17 @@ const Cart = () => {
                 </div>
               </div>
 
-              <button className={styles.summary__brn}>Оформить заказ</button>
+              <StripeCheckout
+                name="GAME STORE"
+                image="http://unsplash.it/375/375"
+                currency="RUB"
+                description={`Итого к оплате ${cart.subtotal}руб.`}
+                amount={cart.subtotal * 100}
+                token={onToken}
+                stripeKey={KEY}
+              >
+                <button className={styles.summary__brn}>Оформить заказ</button>
+              </StripeCheckout>
             </div>
             {/* aside */}
           </>

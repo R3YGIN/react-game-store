@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProductPageDetails from "../components/ProductPageDetails";
 import PageTitle from "../components/UI/PageTitle";
-import { publicRequest } from "../requestMethods";
+import { userOrders } from "../redux/apiCalls";
+import { clearOrders } from "../redux/orderRedux";
+import { currentUser, publicRequest } from "../requestMethods";
 
 const ProductPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const productSlug = location.pathname.split("/")[2];
-  console.log(productSlug);
+  const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user.currentUser);
+  const order = useSelector((state) => state.order);
+
   const [product, setProduct] = useState({
     title: "",
     genre: [],
@@ -35,6 +40,10 @@ const ProductPage = () => {
     };
     getProduct();
   }, [productSlug]);
+
+  useEffect(() => {
+    user && !order.orders.length && userOrders(dispatch, currentUser._id);
+  }, []);
 
   return (
     <section>

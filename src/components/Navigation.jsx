@@ -2,10 +2,29 @@ import { Search } from "@mui/icons-material";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./Navigation.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { userCart, userOrders } from "../redux/apiCalls";
+import { currentUser } from "../requestMethods";
 
 const Navigation = () => {
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user.currentUser);
+
+  const dispatch = useDispatch();
+
+  const handleGetCartData =
+    cart.id && !cart.isFetching
+      ? () => {
+          userCart(dispatch, currentUser._id, currentUser.accessToken);
+        }
+      : null;
+
+  const handleGetOrderData =
+    user && !cart.isFetching
+      ? () => {
+          userOrders(dispatch, currentUser._id, currentUser.accessToken);
+        }
+      : null;
 
   return (
     <section className={styles.navigation}>
@@ -34,7 +53,7 @@ const Navigation = () => {
                 <p>Главная</p>
               </NavLink>
             </li>
-            <li>
+            <li onClick={handleGetOrderData}>
               <NavLink
                 to="/catalog"
                 className={({ isActive }) =>
@@ -66,7 +85,7 @@ const Navigation = () => {
                 <p>Список желаемого</p>
               </NavLink>
             </li> */}
-            <li>
+            <li onClick={handleGetCartData}>
               <NavLink
                 to="/cart"
                 className={({ isActive }) =>

@@ -6,6 +6,7 @@ const cartSlice = createSlice({
   initialState: {
     id: "",
     products: [],
+    info: [],
     discount: 0,
     quantity: 0,
     price: 0,
@@ -20,6 +21,24 @@ const cartSlice = createSlice({
     },
     getCartSuccess: (state, action) => {
       state.isFetching = false;
+      state.products = [];
+      state.discount = 0;
+      state.quantity = 0;
+      state.price = 0;
+      state.subtotal = 0;
+      state.info = action.payload.products;
+      state.id = action.payload._id;
+    },
+    getCartFailure: (state) => {
+      state.isFetching = false;
+      state.error = true;
+    },
+
+    getCartDataStart: (state) => {
+      state.isFetching = true;
+    },
+    getCartDataSuccess: (state, action) => {
+      state.isFetching = false;
       state.products.push(action.payload);
       state.quantity = state.products.length;
       state.price += action.payload.price;
@@ -32,10 +51,7 @@ const cartSlice = createSlice({
           : 0
       );
     },
-    getCartId: (state, action) => {
-      state.id = action.payload;
-    },
-    getCartFailure: (state) => {
+    getCartDataFailure: (state) => {
       state.isFetching = false;
       state.error = true;
     },
@@ -43,7 +59,8 @@ const cartSlice = createSlice({
     updateCartStart: (state) => {
       state.isFetching = true;
     },
-    updateCartSuccess: (state) => {
+    updateCartSuccess: (state, action) => {
+      state.id = action.payload._id;
       state.isFetching = false;
       state.products = [];
       state.discount = 0;
@@ -59,10 +76,13 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.id = "";
       state.products = [];
+      state.info = [];
       state.discount = 0;
       state.quantity = 0;
       state.price = 0;
       state.subtotal = 0;
+      state.isFetching = false;
+      state.error = false;
     },
   },
 });
@@ -74,6 +94,9 @@ export const {
   getCartSuccess,
   getCartId,
   getCartFailure,
+  getCartDataStart,
+  getCartDataSuccess,
+  getCartDataFailure,
   updateCartStart,
   updateCartSuccess,
   updateCartFailure,

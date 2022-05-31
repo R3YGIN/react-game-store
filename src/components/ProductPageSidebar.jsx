@@ -1,24 +1,29 @@
 import { Apps } from "@mui/icons-material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ProductPageSidebar.module.css";
 import Discount from "./UI/Discount";
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct } from "../redux/cartRedux";
-import { updateCart } from "../redux/apiCalls";
+import { purchase, updateCart, userOrders } from "../redux/apiCalls";
 import { Link, useNavigate } from "react-router-dom";
 import { calcDiscount } from "../data";
-import { currentUser } from "../requestMethods";
+import { currentUser, userRequest } from "../requestMethods";
 import { CircularProgress } from "@mui/material";
+import StripeCheckout from "react-stripe-checkout";
 
 const ProductPageSidebar = ({ product }) => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.cart.products);
   const user = useSelector((state) => state.user.currentUser);
+  const orders = useSelector((state) => state.order.orders);
+
   const cart = useSelector((state) => state.cart);
   const { isFetching } = useSelector((state) => state.cart);
 
   const navigate = useNavigate();
 
+  useEffect(() => {});
+
+  //Add to cart
   const updatedCartData = {
     userId: currentUser?._id,
     products: [
@@ -32,9 +37,6 @@ const ProductPageSidebar = ({ product }) => {
       },
     ],
   };
-
-  console.log("PUT", updatedCartData);
-
   const handleAddToCart = !isFetching
     ? () => {
         user
@@ -43,11 +45,57 @@ const ProductPageSidebar = ({ product }) => {
       }
     : null;
 
-  const handleBuyNow = () => {
-    user ? console.log("buy") : navigate("/login");
-  };
+  //Purchase
+  const KEY = process.env.REACT_APP_STRIPE;
+  const [stripeToken, setStripeToken] = useState(null);
 
-  const library = false;
+  const onToken = !isFetching
+    ? (token) => {
+        setStripeToken(token);
+      }
+    : null;
+
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const res = await userRequest.post("/checkout/payment", {
+          tokenId: stripeToken.id,
+          amount: product.sale
+            ? calcDiscount(product.price, product.sale) * 100
+            : product.price * 100,
+        });
+        purchase(
+          dispatch,
+          {
+            userId: currentUser._id,
+            products: [
+              {
+                productId: product._id,
+                productSlug: product.productSlug,
+              },
+            ],
+            amount: product.sale
+              ? calcDiscount(product.price, product.sale)
+              : product.price,
+          },
+          cart,
+          currentUser
+        );
+        setStripeToken(null);
+        console.log("ОПЛАТА ПРОШЛА УСПЕШНО -", res.data);
+      } catch (err) {
+        console.log("ОШИБКА ОПЛАТЫ -", err);
+      }
+    };
+    stripeToken && makeRequest();
+  }, [stripeToken]);
+
+  // --
+
+  // ---
+  const library =
+    orders.length &&
+    orders.some((item) => item.productSlug === product.productSlug);
 
   return (
     <div className={styles.container}>
@@ -82,45 +130,68 @@ const ProductPageSidebar = ({ product }) => {
       </div>
 
       <div className={styles.btns}>
-        {/* {library ? ( */}
-        <div className={styles.library + " " + styles.btn}>
-          <Apps
-            style={{
-              height: "1vw",
-              width: "1vw",
-            }}
-          />
-          <span>В библиотеке</span>
-        </div>
-        {/* ) : ( */}
-        <>
-          <button
-            className={styles.buy__now + " " + styles.btn}
-            disabled={isFetching}
-            onClick={handleBuyNow}
-          >
-            Купить сейчас
-          </button>
+        {library ? (
+          <div className={styles.library + " " + styles.btn}>
+            <Apps
+              style={{
+                height: "1vw",
+                width: "1vw",
+              }}
+            />
+            <span>В библиотеке</span>
+          </div>
+        ) : (
+          <>
+            {user ? (
+              <StripeCheckout
+                name="GAME STORE"
+                image="http://unsplash.it/375/375"
+                currency="RUB"
+                description={`Итого к оплате ${product.price}руб.`}
+                amount={product.price * 100}
+                token={onToken}
+                stripeKey={KEY}
+              >
+                <button
+                  className={styles.buy__now + " " + styles.btn}
+                  disabled={isFetching}
+                >
+                  Купить сейчас
+                </button>
+              </StripeCheckout>
+            ) : (
+              <button
+                className={styles.buy__now + " " + styles.btn}
+                disabled={isFetching}
+                onClick={() => navigate("/login")}
+              >
+                Купить сейчас
+              </button>
+            )}
 
-          {products.some((item) => item.productSlug === product.productSlug) ? (
-            <Link to="/cart" className={styles.cart + " " + styles.btn}>
-              Посмотреть в корзине
-            </Link>
-          ) : (
-            <button
-              className={styles.cart + " " + styles.btn}
-              disabled={isFetching}
-              onClick={handleAddToCart}
-            >
-              {isFetching ? (
-                <CircularProgress style={{ width: "1.5vw", height: "1.5vw" }} />
-              ) : (
-                "Добавить в корзину"
-              )}
-            </button>
-          )}
-        </>
-        {/* )} */}
+            {products.some(
+              (item) => item.productSlug === product.productSlug
+            ) ? (
+              <Link to="/cart" className={styles.cart + " " + styles.btn}>
+                Посмотреть в корзине
+              </Link>
+            ) : (
+              <button
+                className={styles.cart + " " + styles.btn}
+                disabled={isFetching}
+                onClick={handleAddToCart}
+              >
+                {isFetching ? (
+                  <CircularProgress
+                    style={{ width: "1.5vw", height: "1.5vw" }}
+                  />
+                ) : (
+                  "Добавить в корзину"
+                )}
+              </button>
+            )}
+          </>
+        )}
       </div>
 
       <div className={styles.info}>

@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userReducer from "./userRedux";
 import registerReducer from "./registerRedux";
 import cartReducer from "./cartRedux";
+import orderReducer from "./orderRedux";
 import {
   persistStore,
   persistReducer,
@@ -18,12 +19,14 @@ const persistConfig = {
   key: "game-store",
   version: 1,
   storage,
+  whitelist: ["user"],
 };
 
 const rootReducer = combineReducers({
   user: userReducer,
   cart: cartReducer,
   register: registerReducer,
+  order: orderReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

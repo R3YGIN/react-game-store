@@ -10,8 +10,10 @@ import { currentUser } from "./requestMethods";
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
-  const cart = useSelector((state) => state.cart.id);
-  if (user && cart && !currentUser) window.location.reload(); //Найти другой метод
+  const order = useSelector((state) => state.order);
+  const cart = useSelector((state) => state.cart);
+  if (user && cart.id && !cart.isFetching && !order.isFetching && !currentUser)
+    window.location.reload(); //Найти другой метод
 
   return (
     <BrowserRouter>
