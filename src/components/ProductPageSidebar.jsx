@@ -3,17 +3,16 @@ import React, { useEffect, useState } from "react";
 import styles from "./ProductPageSidebar.module.css";
 import Discount from "./UI/Discount";
 import { useDispatch, useSelector } from "react-redux";
-import { purchase, updateCart, userOrders } from "../redux/apiCalls";
+import { purchase, updateCart, userCart, userOrders } from "../redux/apiCalls";
 import { Link, useNavigate } from "react-router-dom";
 import { calcDiscount } from "../data";
-import { currentUser, userRequest } from "../requestMethods";
+import { userRequest } from "../requestMethods";
 import { CircularProgress } from "@mui/material";
 import StripeCheckout from "react-stripe-checkout";
 
 const ProductPageSidebar = ({ product }) => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.cart.products);
-  const user = useSelector((state) => state.user.currentUser);
   const orders = useSelector((state) => state.order.orders);
 
   const cart = useSelector((state) => state.cart);
@@ -23,7 +22,7 @@ const ProductPageSidebar = ({ product }) => {
 
   //Add to cart
   const updatedCartData = {
-    userId: currentUser?._id,
+    userId: JSON.parse(localStorage.getItem("currentUser"))?._id,
     products: [
       ...cart.products.map((item) => ({
         productId: item._id,
@@ -37,8 +36,13 @@ const ProductPageSidebar = ({ product }) => {
   };
   const handleAddToCart = !isFetching
     ? () => {
-        user
-          ? updateCart(dispatch, cart.id, updatedCartData, currentUser)
+        JSON.parse(localStorage.getItem("currentUser"))
+          ? updateCart(
+              dispatch,
+              cart.id,
+              updatedCartData,
+              JSON.parse(localStorage.getItem("currentUser"))
+            )
           : navigate("/login");
       }
     : null;
@@ -65,7 +69,7 @@ const ProductPageSidebar = ({ product }) => {
         purchase(
           dispatch,
           {
-            userId: currentUser._id,
+            userId: JSON.parse(localStorage.getItem("currentUser"))?._id,
             products: [
               {
                 productId: product._id,
@@ -77,7 +81,7 @@ const ProductPageSidebar = ({ product }) => {
               : product.price,
           },
           cart,
-          currentUser
+          JSON.parse(localStorage.getItem("currentUser"))
         );
         setStripeToken(null);
         console.log("ОПЛАТА ПРОШЛА УСПЕШНО -", res.data);
@@ -87,6 +91,22 @@ const ProductPageSidebar = ({ product }) => {
     };
     stripeToken && makeRequest();
   }, [stripeToken]);
+
+  useEffect(() => {
+    const getData = async () => {
+      await userCart(
+        dispatch,
+        JSON.parse(localStorage.getItem("currentUser"))?._id,
+        JSON.parse(localStorage.getItem("currentUser"))?.accessToken
+      );
+      await userOrders(
+        dispatch,
+        JSON.parse(localStorage.getItem("currentUser"))?._id,
+        JSON.parse(localStorage.getItem("currentUser"))?.accessToken
+      );
+    };
+    getData();
+  }, []);
 
   // --
 
@@ -140,7 +160,7 @@ const ProductPageSidebar = ({ product }) => {
           </div>
         ) : (
           <>
-            {user ? (
+            {JSON.parse(localStorage.getItem("currentUser")) ? (
               <StripeCheckout
                 name="GAME STORE"
                 image="http://unsplash.it/375/375"

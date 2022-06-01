@@ -4,14 +4,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ProductPageDetails from "../components/ProductPageDetails";
 import PageTitle from "../components/UI/PageTitle";
 import { userOrders } from "../redux/apiCalls";
-import { clearOrders } from "../redux/orderRedux";
-import { currentUser, publicRequest } from "../requestMethods";
+import { publicRequest } from "../requestMethods";
 
 const ProductPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const productSlug = location.pathname.split("/")[2];
-  const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user.currentUser);
   const order = useSelector((state) => state.order);
 
@@ -42,7 +40,12 @@ const ProductPage = () => {
   }, [productSlug]);
 
   useEffect(() => {
-    user && !order.orders.length && userOrders(dispatch, currentUser._id);
+    user &&
+      !order.orders.length &&
+      userOrders(
+        dispatch,
+        JSON.parse(localStorage.getItem("currentUser"))?._id
+      );
   }, []);
 
   return (

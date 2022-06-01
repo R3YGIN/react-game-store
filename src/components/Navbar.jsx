@@ -1,5 +1,5 @@
 import { Login, Logout, Person } from "@mui/icons-material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import styles from "./Navbar.module.css";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -108,7 +108,9 @@ const Navbar = () => {
                   height: "1.5vw",
                 }}
               />
-              <span className={styles.account__text}>{user.username}</span>
+              <span className={styles.account__text}>
+                {JSON.parse(localStorage.getItem("currentUser"))?.username}
+              </span>
               <ul className={styles.account__list}>
                 <li>
                   <a href="#" className={styles.account__link}>

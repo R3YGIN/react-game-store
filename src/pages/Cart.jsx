@@ -6,19 +6,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Check } from "@mui/icons-material";
 import { calcDiscount } from "../data";
-import { currentUser, userRequest } from "../requestMethods";
-import { purchase, updateCart, userCart } from "../redux/apiCalls";
+import { userRequest } from "../requestMethods";
+import { purchase, updateCart } from "../redux/apiCalls";
 import StripeCheckout from "react-stripe-checkout";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
-  const user = useSelector((state) => state.user.currentUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // Удаление из карзины
   const updatedCartData = {
-    userId: currentUser?._id,
+    userId: JSON.parse(localStorage.getItem("currentUser"))?._id,
     products: cart.products.length
       ? [
           ...cart.products.map((item) => ({
@@ -47,12 +46,12 @@ const Cart = () => {
         purchase(
           dispatch,
           {
-            userId: currentUser._id,
+            userId: JSON.parse(localStorage.getItem("currentUser"))?._id,
             products: [...cart.info], //В массив передаем инфу о продукте/продуктах
             amount: cart.subtotal,
           },
           cart,
-          currentUser
+          JSON.parse(localStorage.getItem("currentUser"))
         );
         setStripeToken(null);
         console.log("ОПЛАТА ПРОШЛА УСПЕШНО -", res.data);
@@ -69,7 +68,12 @@ const Cart = () => {
           (item) => item.productSlug !== e.target.dataset.product
         );
         console.log(updatedCartData);
-        await updateCart(dispatch, cart.id, updatedCartData, currentUser);
+        await updateCart(
+          dispatch,
+          cart.id,
+          updatedCartData,
+          JSON.parse(localStorage.getItem("currentUser"))
+        );
       }
     : null;
 

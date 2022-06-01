@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 import styles from "./Navigation.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { userCart, userOrders } from "../redux/apiCalls";
-import { currentUser } from "../requestMethods";
 
 const Navigation = () => {
   const cart = useSelector((state) => state.cart);
@@ -15,14 +14,22 @@ const Navigation = () => {
   const handleGetCartData =
     cart.id && !cart.isFetching
       ? () => {
-          userCart(dispatch, currentUser._id, currentUser.accessToken);
+          userCart(
+            dispatch,
+            JSON.parse(localStorage.getItem("currentUser"))?._id,
+            JSON.parse(localStorage.getItem("currentUser"))?.accessToken
+          );
         }
       : null;
 
   const handleGetOrderData =
     user && !cart.isFetching
       ? () => {
-          userOrders(dispatch, currentUser._id, currentUser.accessToken);
+          userOrders(
+            dispatch,
+            JSON.parse(localStorage.getItem("currentUser"))?._id,
+            JSON.parse(localStorage.getItem("currentUser"))?.accessToken
+          );
         }
       : null;
 

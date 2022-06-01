@@ -13,7 +13,6 @@ import {
   getCartFailure,
   getCartStart,
   getCartSuccess,
-  updateCartFailure,
   updateCartStart,
   updateCartSuccess,
 } from "./cartRedux";
@@ -33,6 +32,14 @@ export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
     const res = await publicRequest.post("/auth/login", user);
+    localStorage.setItem(
+      "currentUser",
+      JSON.stringify({
+        _id: res.data._id,
+        accessToken: res.data.accessToken,
+        username: res.data.username,
+      })
+    );
     dispatch(loginSuccess(res.data));
     //Get user cart
     userCart(dispatch, res.data._id, res.data.accessToken);
@@ -47,12 +54,21 @@ export const logoutFunc = async (dispatch) => {
   dispatch(logout());
   dispatch(clearCart());
   dispatch(clearOrders());
+  localStorage.removeItem("currentUser");
 };
 
 export const register = async (dispatch, newUser) => {
   dispatch(registerStart());
   try {
     const res = await publicRequest.post(`/auth/register/`, newUser);
+    localStorage.setItem(
+      "currentUser",
+      JSON.stringify({
+        _id: res.data._id,
+        accessToken: res.data.accessToken,
+        username: res.data.username,
+      })
+    );
     dispatch(registerSuccess(res.data));
     // AutoLogin
     login(dispatch, { username: newUser.username, password: newUser.password });

@@ -6,7 +6,6 @@ import Cart from "./pages/Cart";
 import ProductPage from "./pages/ProductPage";
 import LoginPage from "./pages/LoginPage";
 import { useDispatch, useSelector } from "react-redux";
-import { currentUser } from "./requestMethods";
 import { useEffect } from "react";
 import { userCart, userOrders } from "./redux/apiCalls";
 
@@ -14,15 +13,32 @@ function App() {
   const user = useSelector((state) => state.user.currentUser);
   const order = useSelector((state) => state.order);
   const cart = useSelector((state) => state.cart);
-  if (user && cart.id && !cart.isFetching && !order.isFetching && !currentUser)
+  if (
+    user &&
+    cart?.id &&
+    !cart?.isFetching &&
+    !order?.isFetching &&
+    !JSON.parse(localStorage.getItem("currentUser"))
+  )
     window.location.reload(); //Найти другой метод
   const dispatch = useDispatch();
 
   //Загрузка данных пользователя
   useEffect(() => {
-    if (user._id) {
-      userCart(dispatch, user._id, user.accessToken);
-      userOrders(dispatch, user._id, user.accessToken);
+    if (JSON.parse(localStorage.getItem("currentUser"))?._id) {
+      const getData = async () => {
+        await userCart(
+          dispatch,
+          JSON.parse(localStorage.getItem("currentUser"))?._id,
+          JSON.parse(localStorage.getItem("currentUser"))?.accessToken
+        );
+        await userOrders(
+          dispatch,
+          JSON.parse(localStorage.getItem("currentUser"))?._id,
+          JSON.parse(localStorage.getItem("currentUser"))?.accessToken
+        );
+      };
+      getData();
     }
   }, []);
 
