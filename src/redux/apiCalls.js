@@ -41,6 +41,7 @@ export const login = async (dispatch, user) => {
       })
     );
     dispatch(loginSuccess(res.data));
+    window.location.reload();
     //Get user cart
     userCart(dispatch, res.data._id, res.data.accessToken);
     //Get user orders
@@ -61,14 +62,15 @@ export const register = async (dispatch, newUser) => {
   dispatch(registerStart());
   try {
     const res = await publicRequest.post(`/auth/register/`, newUser);
-    localStorage.setItem(
-      "currentUser",
-      JSON.stringify({
-        _id: res.data._id,
-        accessToken: res.data.accessToken,
-        username: res.data.username,
-      })
-    );
+    console.log("REG---", res.data);
+    // localStorage.setItem(
+    //   "currentUser",
+    //   JSON.stringify({
+    //     _id: res.data._id,
+    //     accessToken: res.data.accessToken,
+    //     username: res.data.username,
+    //   })
+    // );
     dispatch(registerSuccess(res.data));
     // AutoLogin
     login(dispatch, { username: newUser.username, password: newUser.password });
