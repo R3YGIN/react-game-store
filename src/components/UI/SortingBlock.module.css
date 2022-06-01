@@ -25,7 +25,7 @@
 .sort__value {
   display: flex;
   align-items: center;
-  color: #f5f5f599;
+  color: var(--text);
   font-weight: 700;
   font-size: 14px;
   transition: all 0.3s;
@@ -42,10 +42,10 @@
 }
 
 .sort__select:hover .sort__value {
-  color: #f5f5f5;
+  color: var(--text);
 }
 .sort__select:hover .sort__title {
-  color: #f5f5f599;
+  color: var(--text);
 }
 
 .sort__drop {
@@ -94,12 +94,12 @@
 }
 
 .sort__dropItem:hover {
-  color: #f5f5f5;
+  color: var(--text);
   text-decoration: underline;
   background-color: #20202099;
 }
 
 .sort__dropItemCheck:checked ~ .sort__dropItemName {
-  color: #f5f5f5;
+  color: var(--text);
   text-decoration: underline;
 }

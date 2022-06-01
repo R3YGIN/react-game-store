@@ -1,9 +1,10 @@
 import { Login, Logout, Person } from "@mui/icons-material";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Navbar.module.css";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutFunc } from "../redux/apiCalls";
+import { lightMode, darkMode } from "../data";
 
 const Navbar = () => {
   const user = useSelector((state) => state.user.currentUser);
@@ -13,6 +14,25 @@ const Navbar = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
     await logoutFunc(dispatch);
+  };
+
+  const themeCheckbox = useRef();
+  console.log(themeCheckbox.current);
+
+  const handleSwitchTheme = () => {
+    const light = () => {
+      for (let key in lightMode) {
+        // console.log(key, lightMode[key]);
+        document.documentElement.style.setProperty(key, lightMode[key]);
+      }
+    };
+    const dark = () => {
+      for (let key in darkMode) {
+        // console.log(key, darkMode[key]);
+        document.documentElement.style.setProperty(key, darkMode[key]);
+      }
+    };
+    themeCheckbox.current.checked ? light() : dark();
   };
 
   return (
@@ -66,10 +86,27 @@ const Navbar = () => {
         </div>
 
         <div className={styles.top__right}>
+          <div className={styles.themeSwitch}>
+            <input
+              ref={themeCheckbox}
+              type="checkbox"
+              name="theme"
+              id="theme"
+              onChange={handleSwitchTheme}
+              className={styles.themeSwitch__checkbox}
+            />
+            <label htmlFor="theme" className={styles.themeSwitch__container}>
+              <div className={styles.themeSwitch__btn}></div>
+            </label>
+          </div>
           {user ? (
             <div className={styles.account}>
               <Person
-                style={{ color: "#e7e7e7", width: "1.5vw", height: "1.5vw" }}
+                style={{
+                  color: "var(--textHeader)",
+                  width: "1.5vw",
+                  height: "1.5vw",
+                }}
               />
               <span className={styles.account__text}>{user.username}</span>
               <ul className={styles.account__list}>

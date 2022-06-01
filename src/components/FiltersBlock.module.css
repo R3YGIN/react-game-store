@@ -7,7 +7,7 @@
 }
 
 .filter__title {
-  color: #f5f5f5;
+  color: var(--text);
   font-weight: 500;
   padding: 1vw 0;
   margin-bottom: 0.5vw;
@@ -16,7 +16,7 @@
 .filter__search {
   display: flex;
   align-items: center;
-  background-color: #202020;
+  background-color: var(--searchBgc);
   height: 2vw;
   width: 100%;
   border-radius: 5px;
@@ -41,7 +41,7 @@
   height: 100%;
   width: 100%;
   flex: 4;
-  color: #f5f5f5;
+  color: var(--text);
   outline: none;
   font-weight: 500;
 }
@@ -78,7 +78,7 @@
 .accordion__summary:hover .summary__title,
 .accordion__summary:hover .summary__icon,
 .accordion__btn:hover {
-  color: #f5f5f5;
+  color: var(--text);
 }
 
 .accordion__details {
@@ -103,7 +103,7 @@
 }
 
 .accordion__check:checked ~ .accordion__details .accordion__btn:hover {
-  color: #f5f5f5;
+  color: var(--text);
 }
 
 .accordion__check:checked ~ .accordion__summary .summary__icon {

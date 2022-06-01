@@ -21,8 +21,6 @@ const ProductPageSidebar = ({ product }) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {});
-
   //Add to cart
   const updatedCartData = {
     userId: currentUser?._id,

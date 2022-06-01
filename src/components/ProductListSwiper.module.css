@@ -70,7 +70,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #f5f5f5;
+  color: var(--text);
   font-size: 1vw;
   font-weight: 500;
 }
@@ -90,7 +90,7 @@
   border-radius: 4px;
   font-size: 14px;
   font-weight: 500;
-  color: #f5f5f5;
+  color: var(--text);
 }
 
 .slide__priceBlock {
@@ -104,7 +104,7 @@
 }
 
 .slide__price {
-  color: #f5f5f5;
+  color: var(--text);
 }
 
 @media (max-width: 800px) {

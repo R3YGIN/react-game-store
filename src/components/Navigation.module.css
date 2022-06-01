@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
   z-index: 9;
-  background-color: #121212;
+  background-color: var(--bgc);
   font-size: 0.8vw;
   font-weight: 700;
 }
@@ -20,7 +20,7 @@
 }
 
 .search__group {
-  background-color: #202020;
+  background-color: var(--searchBgc);
   height: 2vw;
   width: 80%;
   border-radius: 24px;
@@ -44,7 +44,7 @@
   height: 100%;
   width: 100%;
   flex: 4;
-  color: #f5f5f5;
+  color: var(--text);
   outline: none;
 }
 
@@ -73,21 +73,21 @@
 }
 .nav__link.active,
 .nav__link:hover {
-  color: #f5f5f5;
+  color: var(--text);
 }
 
 .nav__link_active {
   display: inline-block;
   padding: 1vw;
-  color: #f5f5f5;
+  color: var(--text);
   transition: color 0.3s;
   display: flex;
   align-items: center;
 }
 
 .cart__quantity {
-  color: #121212;
-  background-color: #f5f5f5;
+  color: var(--bgc);
+  background-color: var(--text);
   margin-left: 0.5vw;
   padding: 0.25vw 0.5vw;
   border-radius: 0.75vw;

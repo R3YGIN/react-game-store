@@ -369,6 +369,54 @@ a {
   color: inherit;
 }
 
+/* dark */
+:root {
+  --bgc: #121212;
+  --text: #f5f5f5;
+  --textDarker: #f5f5f599;
+  --headerBgc: #2a2a2a;
+  --textHeader: #cccccc;
+  --footerBgc: #202020;
+  --textFooter: #cccccc;
+  --textFooterTitle: #656565;
+  --genreListBgc: #1f1f1f;
+  --searchBgc: #202020;
+  --swiperBtnBgc: #2b2b2b;
+  --cartItemBgc: #202020;
+
+  --freeGameBgc: #2a2a2a;
+  --infoBlockBtn: #fff;
+  --bigSliderBtn: #fff;
+  --sysRequBgc: #262626;
+  --productTypeBgc: #373737;
+  --loginPageBgc: #202020;
+  --loginInputBgc: #373737;
+}
+
+/* light */
+/* :root {
+  --bgc: #fcfcfc;
+  --text: #1f304b;
+  --textDarker: #1f304b99;
+  --headerBgc: #ebebeb;
+  --textHeader: #272d2f;
+  --footerBgc: #ebebeb;
+  --textFooter: #272d2f;
+  --textFooterTitle: #131313;
+  --genreListBgc: #ccc;
+  --searchBgc: #ebebeb;
+  --swiperBtnBgc: #ccc;
+	--cartItemBgc: #ccc;
+
+  --freeGameBgc: #ccc;
+  --infoBlockBtn: #afafaf;
+  --bigSliderBtn: #1f304b;
+  --sysRequBgc: #afafaf;
+  --productTypeBgc: #afafaf;
+  --loginPageBgc: #ccc;
+  --loginInputBgc: #ebebeb;
+} */
+
 body {
-  background-color: #121212;
+  background-color: var(--bgc);
 }
