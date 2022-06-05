@@ -6,11 +6,21 @@
   font-size: 0.8vw;
 }
 
-.filter__title {
+.filter__titleContainer {
+  display: flex;
   color: var(--text);
   font-weight: 500;
   padding: 1vw 0;
   margin-bottom: 0.5vw;
+  justify-content: space-between;
+}
+
+.filter__title {
+}
+
+.filter__title_reset {
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
 .filter__search {
@@ -85,7 +95,13 @@
   overflow: hidden;
 }
 
+.accordion__btnCheck {
+  display: none;
+}
+
 .accordion__btn {
+  display: flex;
+  align-items: center;
   transition: padding 0.5s, color ease-in-out 0.1s;
   padding: 0;
   max-height: 0;
@@ -96,9 +112,19 @@
   color: transparent;
 }
 
+.accordion__check:checked
+  ~ .accordion__details
+  .accordion__btnCheck:checked
+  ~ .accordion__btn {
+  border: 1px solid #777;
+  border-radius: 0.5vw;
+  color: var(--text);
+}
+
 .accordion__check:checked ~ .accordion__details .accordion__btn {
   max-height: auto;
   padding: 1.5vw 0;
+  padding-left: 1vw;
   color: #777;
 }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./InfoBlock.module.css";
+import CatalogImg from "../assets/img/homaPage/Home_catalog.jpg";
 
 const InfoBlock = () => {
   return (
@@ -10,7 +11,7 @@ const InfoBlock = () => {
           <div className={styles.info__imgContainer}>
             <img
               className={styles.info__img}
-              src="http://unsplash.it/1000/500"
+              src={CatalogImg}
               loading="lazy"
               alt="Info img"
             />
