@@ -202,25 +202,25 @@ export const genreListSlides = [
   {
     id: "glsid1",
     name: "Экшен",
-    link: "/catalog",
+    value: "action",
     img: GenreAction,
   },
   {
     id: "glsid2",
     name: "Казуальная",
-    link: "/catalog",
+    value: "casual",
     img: GenreCasual,
   },
   {
     id: "glsid3",
     name: "Хоррор",
-    link: "/catalog",
+    value: "horror",
     img: GenreHorror,
   },
   {
     id: "glsid4",
     name: "Инди",
-    link: "/catalog",
+    value: "indie",
     img: GenreIndie,
   },
 ];

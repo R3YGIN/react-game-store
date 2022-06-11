@@ -1,12 +1,22 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import TopListSwiper from "./UI/TopListSwiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import styles from "./GenreListSwiper.module.css";
 import { genreListSlides } from "../data";
-import { Link } from "react-router-dom";
+import { setGenre } from "../redux/filterRedux";
 
 const GenreListSwiper = () => {
+  const dispatch = useDispatch();
+
+  const handleGenreClick = (value) => {
+    dispatch(setGenre(value));
+    const radioInputs = document.querySelectorAll("[data-filter-radio-input]");
+    const genre = [...radioInputs].find((item) => item.value === value);
+    genre.checked = true;
+  };
+
   return (
     <section className={styles.container}>
       <TopListSwiper title="Популярные жанры" />
@@ -38,7 +48,10 @@ const GenreListSwiper = () => {
         {genreListSlides.map((item) => (
           <SwiperSlide key={item.id}>
             <div className={styles.slide}>
-              <Link to={item.link}>
+              <a
+                href="#productList"
+                onClick={() => handleGenreClick(item.value)}
+              >
                 <div className={styles.slide__imgContainer}>
                   <img
                     src={item.img}
@@ -50,7 +63,7 @@ const GenreListSwiper = () => {
                 <div className={styles.slide__titleContainer}>
                   <span className={styles.slide__title}>{item.name}</span>
                 </div>
-              </Link>
+              </a>
             </div>
           </SwiperSlide>
         ))}

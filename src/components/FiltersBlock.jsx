@@ -1,18 +1,30 @@
 import { KeyboardArrowDown, Search } from "@mui/icons-material";
-import React from "react";
-import styles from "./FiltersBlock.module.css";
-
-const FiltersBlock = ({
-  filters,
-  search,
-  setSearch,
+import React, { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
   setGenre,
   setPrice,
   setSale,
-  handleResetFilters,
-  radioInputs,
-  someFilters,
-}) => {
+  setSearch,
+  resetFilters,
+} from "../redux/filterRedux";
+import styles from "./FiltersBlock.module.css";
+
+const FiltersBlock = ({ filters }) => {
+  const { search, price, sale, genre } = useSelector((state) => state.filter);
+  const dispatch = useDispatch();
+
+  const someFilters = price || genre || search || sale;
+
+  //Reset filters
+
+  const handleResetFilters = () => {
+    dispatch(resetFilters());
+    const radioInputs = document.querySelectorAll("[data-filter-radio-input]");
+    radioInputs.forEach((item) => (item.checked = false));
+  };
+  const radioInputs = useRef([]);
+
   return (
     <aside className={styles.filter__block}>
       <div className={styles.filter__titleContainer}>
@@ -33,8 +45,8 @@ const FiltersBlock = ({
         <input
           type="text"
           placeholder="Ключевые слова"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          // value={search}
+          onChange={(e) => dispatch(setSearch(e.target.value))}
           className={styles.filter__searchInput}
         />
       </div>
@@ -69,11 +81,11 @@ const FiltersBlock = ({
                   value={detail?.value}
                   onChange={(e) =>
                     detail?.type === "genre"
-                      ? setGenre(e.target.value)
+                      ? dispatch(setGenre(e.target.value))
                       : detail?.type === "price"
-                      ? setPrice(e.target.value)
+                      ? dispatch(setPrice(e.target.value))
                       : detail?.type === "sale"
-                      ? setSale(true)
+                      ? dispatch(setSale(true))
                       : console.log("Неизвестный блок")
                   }
                   className={styles.accordion__btnCheck}

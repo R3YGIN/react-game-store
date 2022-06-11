@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+
 import { filters } from "../data";
 import { publicRequest } from "../requestMethods";
 import FiltersBlock from "./FiltersBlock";
@@ -11,34 +13,11 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
+  const { search, price, sale, genre } = useSelector((state) => state.filter);
+  console.log("FILTER--", "1-", search, "2-", price, "3-", sale, "4-", genre);
+
   // Sort
   const [sort, setSort] = useState("");
-
-  //Price
-  const [price, setPrice] = useState("");
-
-  //Genre
-  const [genre, setGenre] = useState("");
-
-  //Search
-  const [search, setSearch] = useState("");
-
-  //Sale
-  const [sale, setSale] = useState(false);
-
-  //Reset filters
-  const handleResetFilters = () => {
-    setPrice("");
-    setGenre("");
-    setSearch("");
-    setSale(false);
-    const radioInputs = document.querySelectorAll("[data-filter-radio-input]");
-    radioInputs.forEach((item) => (item.checked = false));
-  };
-
-  const radioInputs = useRef([]);
-
-  const someFilters = price || genre || search || sale;
 
   useEffect(() => {
     const getProducts = async () => {
@@ -103,12 +82,13 @@ const ProductList = () => {
         )
       );
     } else {
-      setFilteredProducts(products);
+      setFilteredProducts([...products]);
     }
   }, [products, sort]);
 
   return (
     <div className={styles.container}>
+      <span className={styles.anchor} id="productList" />
       <section className={styles.catalog}>
         <SortingBlock sort={sort} setSort={setSort} />
         <div className={styles.products__container}>
@@ -121,18 +101,7 @@ const ProductList = () => {
               ))}
         </div>
       </section>
-
-      <FiltersBlock
-        filters={filters}
-        search={search}
-        setSearch={setSearch}
-        setPrice={setPrice}
-        setGenre={setGenre}
-        setSale={setSale}
-        handleResetFilters={handleResetFilters}
-        radioInputs={radioInputs}
-        someFilters={someFilters}
-      />
+      <FiltersBlock filters={filters} />
     </div>
   );
 };
