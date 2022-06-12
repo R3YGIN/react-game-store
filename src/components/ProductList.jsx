@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { filters } from "../data";
 import { publicRequest } from "../requestMethods";
 import FiltersBlock from "./FiltersBlock";
 import ProductCard from "./ProductCard";
@@ -101,7 +100,7 @@ const ProductList = () => {
               ))}
         </div>
       </section>
-      <FiltersBlock filters={filters} />
+      <FiltersBlock />
     </div>
   );
 };

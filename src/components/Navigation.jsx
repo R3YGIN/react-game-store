@@ -1,15 +1,19 @@
 import { Search } from "@mui/icons-material";
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import styles from "./Navigation.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { userCart, userOrders } from "../redux/apiCalls";
+import { useEffect } from "react";
+import { publicRequest } from "../requestMethods";
+import { setSearch } from "../redux/filterRedux";
 
 const Navigation = () => {
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user.currentUser);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleGetCartData =
     cart.id && !cart.isFetching
@@ -33,19 +37,90 @@ const Navigation = () => {
         }
       : null;
 
+  const handleClickSearch = (e) => {
+    console.log("CHECK2--", resultRef.current.contains(e.target));
+    dispatch(setSearch(searchNav));
+    navigate("/catalog");
+    setSearchNav("");
+  };
+
+  const handleEnterSearch = (e) => {
+    if (e.key === "Enter" && searchNav) {
+      dispatch(setSearch(searchNav));
+      navigate("/catalog");
+      setSearchNav("");
+    }
+  };
+
+  const handleUnFocus = (e) => {
+    e.preventDefault();
+  };
+
+  const [searchNav, setSearchNav] = useState("");
+  const [products, setProducts] = useState([]);
+
+  const resultRef = useRef();
+
+  useEffect(() => {
+    const searchProducts = async () => {
+      try {
+        const res = await publicRequest.get(`/products?searchNav=${searchNav}`);
+        setProducts(res.data);
+      } catch (err) {}
+    };
+    searchNav && searchProducts();
+  }, [searchNav]);
+
   return (
     <section className={styles.navigation}>
       <div className={styles.flex__group}>
         <div className={styles.search}>
           <div className={styles.search__group}>
-            <button className={styles.search__btn}>
+            <button className={styles.search__btn} onClick={handleClickSearch}>
               <Search style={{ width: "1.1vw", height: "1.1vw" }} />
             </button>
             <input
               type="text"
               placeholder="Поиск"
+              value={searchNav}
+              onChange={(e) => setSearchNav(e.target.value)}
+              onKeyUp={handleEnterSearch}
               className={styles.search__input}
             />
+            {searchNav && (
+              <div className={styles.search__result} ref={resultRef}>
+                <ul>
+                  {products.length ? (
+                    products.map((item) => (
+                      <li
+                        key={item.productSlug}
+                        className={styles.search__resultName}
+                      >
+                        <Link
+                          to={`/product/${item.productSlug}`}
+                          onMouseDown={handleUnFocus}
+                        >
+                          {item.title}
+                        </Link>
+                      </li>
+                    ))
+                  ) : (
+                    <li>Не найдено</li>
+                  )}
+                  {products.length ? (
+                    <button
+                      className={styles.search__resultBtn}
+                      onClick={handleClickSearch}
+                      onMouseDown={handleUnFocus}
+                    >
+                      Показать все
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
         <nav className={styles.nav}>

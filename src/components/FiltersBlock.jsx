@@ -9,8 +9,9 @@ import {
   resetFilters,
 } from "../redux/filterRedux";
 import styles from "./FiltersBlock.module.css";
+import { filters } from "../data";
 
-const FiltersBlock = ({ filters }) => {
+const FiltersBlock = () => {
   const { search, price, sale, genre } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
 
@@ -45,7 +46,7 @@ const FiltersBlock = ({ filters }) => {
         <input
           type="text"
           placeholder="Ключевые слова"
-          // value={search}
+          value={search}
           onChange={(e) => dispatch(setSearch(e.target.value))}
           className={styles.filter__searchInput}
         />
