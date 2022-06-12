@@ -70,6 +70,19 @@ export const sorting = [
   },
 ];
 
+export const sortingLibrary = [
+  {
+    id: "sorting444fwe",
+    name: "По умолчанию",
+    value: "default",
+  },
+  {
+    id: "sorting555ascv",
+    name: "По алфавиту",
+    value: "alphabet",
+  },
+];
+
 export const filters = [
   {
     id: "filter1",

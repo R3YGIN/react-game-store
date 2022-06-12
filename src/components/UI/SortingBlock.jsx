@@ -1,10 +1,8 @@
 import { KeyboardArrowDown } from "@mui/icons-material";
 import React, { useEffect, useRef, useState } from "react";
-import { sorting } from "../../data";
 import styles from "./SortingBlock.module.css";
 
-const SortingBlock = ({ sort, setSort }) => {
-  // const [sort, setSort] = useState("default");
+const SortingBlock = ({ sort, setSort, sorting }) => {
   console.log(sort);
   const [currentSort, setCurrentSort] = useState("По умолчанию");
 

@@ -38,6 +38,7 @@ export const login = async (dispatch, user) => {
         _id: res.data._id,
         accessToken: res.data.accessToken,
         username: res.data.username,
+        email: res.data.email,
       })
     );
     dispatch(loginSuccess(res.data));

@@ -8,6 +8,8 @@ import LoginPage from "./pages/LoginPage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { userCart, userOrders } from "./redux/apiCalls";
+import Library from "./pages/Library";
+import Account from "./pages/Account";
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
@@ -50,6 +52,8 @@ function App() {
           <Route path="catalog" element={<Catalog />} />
           <Route path="catalog/:category" element={<Catalog />} />
           <Route path="cart" element={<Cart />} />
+          <Route path="library" element={<Library />} />
+          <Route path="account" element={<Account />} />
           <Route path="product/:id" element={<ProductPage />} />
         </Route>
         <Route

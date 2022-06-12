@@ -109,6 +109,8 @@ const LoginPage = () => {
                 name="username"
                 type="text"
                 onChange={handleChange}
+                required
+                minLength={4}
               />
               <input
                 className={styles.input}
@@ -116,6 +118,8 @@ const LoginPage = () => {
                 name="email"
                 type="email"
                 onChange={handleChange}
+                required
+                minLength={4}
               />
               <input
                 className={styles.input}
@@ -123,6 +127,8 @@ const LoginPage = () => {
                 name="password"
                 type="password"
                 onChange={handleChange}
+                required
+                minLength={6}
               />
               <button
                 className={styles.btn}

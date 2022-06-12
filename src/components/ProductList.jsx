@@ -6,6 +6,7 @@ import FiltersBlock from "./FiltersBlock";
 import ProductCard from "./ProductCard";
 import styles from "./ProductList.module.css";
 import SortingBlock from "./UI/SortingBlock";
+import { sorting } from "../data";
 
 const ProductList = () => {
   // Products
@@ -13,7 +14,6 @@ const ProductList = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   const { search, price, sale, genre } = useSelector((state) => state.filter);
-  console.log("FILTER--", "1-", search, "2-", price, "3-", sale, "4-", genre);
 
   // Sort
   const [sort, setSort] = useState("");
@@ -89,7 +89,7 @@ const ProductList = () => {
     <div className={styles.container}>
       <span className={styles.anchor} id="productList" />
       <section className={styles.catalog}>
-        <SortingBlock sort={sort} setSort={setSort} />
+        <SortingBlock sort={sort} setSort={setSort} sorting={sorting} />
         <div className={styles.products__container}>
           {sort
             ? filteredProducts.map((item) => (

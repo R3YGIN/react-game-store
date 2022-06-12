@@ -1,13 +1,14 @@
 import { Login, Logout, Person } from "@mui/icons-material";
 import React, { useRef } from "react";
 import styles from "./Navbar.module.css";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutFunc } from "../redux/apiCalls";
 import { lightMode, darkMode } from "../data";
 
 const Navbar = () => {
   const user = useSelector((state) => state.user.currentUser);
+  const { username } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
@@ -108,19 +109,17 @@ const Navbar = () => {
                   height: "1.5vw",
                 }}
               />
-              <span className={styles.account__text}>
-                {JSON.parse(localStorage.getItem("currentUser"))?.username}
-              </span>
+              <span className={styles.account__text}>{username}</span>
               <ul className={styles.account__list}>
                 <li>
-                  <a href="#" className={styles.account__link}>
+                  <Link to="/account" className={styles.account__link}>
                     <span>УЧЕТНАЯ ЗАПИСЬ</span>
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className={styles.account__link}>
+                  <Link to="/library" className={styles.account__link}>
                     <span>БИБЛИОТЕКА</span>
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <div className={styles.account__link} onClick={handleLogout}>
