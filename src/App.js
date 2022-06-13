@@ -10,6 +10,8 @@ import { useEffect } from "react";
 import { userCart, userOrders } from "./redux/apiCalls";
 import Library from "./pages/Library";
 import Account from "./pages/Account";
+import NewsList from "./pages/NewsList";
+import NewsPage from "./pages/NewsPage";
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
@@ -61,6 +63,8 @@ function App() {
             element={user ? <Account /> : <Navigate to="/" />}
           />
           <Route path="product/:id" element={<ProductPage />} />
+          <Route path="news" element={<NewsList />} />
+          <Route path="news/:id" element={<NewsPage />} />
         </Route>
         <Route
           path="login"
