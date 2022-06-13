@@ -5,3 +5,25 @@
   width: 100%;
   justify-content: flex-start;
 }
+
+.empty {
+  color: var(--text);
+  font-weight: 400;
+  margin-bottom: 5%;
+  text-align: center;
+  padding: 1vw;
+}
+
+.empry__title {
+  font-size: 1.5vw;
+  margin-bottom: 5%;
+}
+
+.empry__link {
+  text-decoration: underline;
+  transition: color 0.3s;
+}
+
+.empry__link:hover {
+  color: #0078f2;
+}

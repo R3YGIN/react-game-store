@@ -4,10 +4,12 @@ import { userRequest } from "../requestMethods";
 import styles from "./Account.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../redux/userRedux";
+import { CircularProgress } from "@mui/material";
 
 const Account = () => {
-  const [inputs, setInputs] = useState({});
+  const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState("");
+  const [inputs, setInputs] = useState({});
 
   const { username, email } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -16,20 +18,31 @@ const Account = () => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleUpdateAcc = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await userRequest.put(
-        `/users/${JSON.parse(localStorage.getItem("currentUser"))?._id}`,
-        inputs
-      );
-      dispatch(loginSuccess(res.data));
-      setError("");
-      console.log("RES--", res.data);
-    } catch (err) {
-      setError(`${err.response.data}`);
-    }
-  };
+  if (inputs?.password === "") {
+    setInputs(({ password, ...other }) => ({ ...other }));
+  }
+
+  const handleUpdateAcc = !isFetching
+    ? async (e) => {
+        e.preventDefault();
+        setIsFetching(true);
+        try {
+          const res = await userRequest.put(
+            `/users/${JSON.parse(localStorage.getItem("currentUser"))?._id}`,
+            inputs
+          );
+          dispatch(loginSuccess(res.data));
+          setError("");
+          setIsFetching(false);
+          console.log("RES--", res.data);
+        } catch (err) {
+          setError(`${err.response.data}`);
+          setIsFetching(false);
+        }
+      }
+    : (e) => {
+        e.preventDefault();
+      };
 
   return (
     <section>
@@ -97,7 +110,15 @@ const Account = () => {
             />
           </div>
           <div className={styles.form__item}>
-            <button className={styles.form__btn}>Обновить</button>
+            <button className={styles.form__btn}>
+              {isFetching ? (
+                <CircularProgress
+                  style={{ width: "1.5vw", height: "1.5vw", color: "#f5f5f5" }}
+                />
+              ) : (
+                "Обновить"
+              )}
+            </button>
           </div>
           {error && (
             <div className={styles.form__item}>

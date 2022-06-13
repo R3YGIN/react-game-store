@@ -52,8 +52,14 @@ function App() {
           <Route path="catalog" element={<Catalog />} />
           <Route path="catalog/:category" element={<Catalog />} />
           <Route path="cart" element={<Cart />} />
-          <Route path="library" element={<Library />} />
-          <Route path="account" element={<Account />} />
+          <Route
+            path="library"
+            element={user ? <Library /> : <Navigate to="/" />}
+          />
+          <Route
+            path="account"
+            element={user ? <Account /> : <Navigate to="/" />}
+          />
           <Route path="product/:id" element={<ProductPage />} />
         </Route>
         <Route

@@ -41,7 +41,7 @@ const orderSlice = createSlice({
     },
     getUserProductsSuccess: (state, action) => {
       state.isFetching = false;
-      state.library.push(action.payload);
+      if (action.payload) state.library.push(action.payload);
     },
     getUserProductsFailure: (state) => {
       state.isFetching = false;
