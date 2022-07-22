@@ -23,7 +23,7 @@ const SysRequBlock = ({ product }) => {
             <div className={styles.col__value}>{requirements.os.min}</div>
           </div>
           <div className={styles.col}>
-            <div className={styles.col__name}>DirectX</div>
+            <div className={styles.col__name}>ОС</div>
             <div className={styles.col__value}>{requirements.os.rec}</div>
           </div>
         </div>

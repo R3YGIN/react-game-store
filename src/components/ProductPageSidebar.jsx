@@ -149,7 +149,10 @@ const ProductPageSidebar = ({ product }) => {
 
       <div className={styles.btns}>
         {library ? (
-          <div className={styles.library + " " + styles.btn}>
+          <div
+            className={styles.library + " " + styles.btn}
+            onClick={() => navigate("/library")}
+          >
             <Apps
               style={{
                 height: "1vw",
