@@ -4,7 +4,7 @@ import { calcDiscount } from "../data";
 import styles from "./ProductCard.module.css";
 import Discount from "./UI/Discount";
 
-const ProductCard = ({ item }) => {
+const ProductCard = ({ item, library }) => {
   return (
     <div className={styles.contaier}>
       <Link to={`/product/${item.productSlug}`}>
@@ -19,26 +19,28 @@ const ProductCard = ({ item }) => {
           </div>
           <div className={styles.product__infoContainer}>
             <div className={styles.product__title}>{item.title}</div>
-            <div className={styles.product__priceContainer}>
-              {item.sale ? (
-                <>
-                  <Discount discount={item.sale} />
-                  <div className={styles.product__oldPrice}>
-                    {item.price} руб.
-                  </div>
-                </>
-              ) : null}
+            {!library && (
+              <div className={styles.product__priceContainer}>
+                {item.sale ? (
+                  <>
+                    <Discount discount={item.sale} />
+                    <div className={styles.product__oldPrice}>
+                      {item.price} руб.
+                    </div>
+                  </>
+                ) : null}
 
-              <div className={styles.product__price}>
-                {item.price === 0
-                  ? "Бесплатно"
-                  : item.sale
-                  ? // ? item.price - (item.price * item.sale) / 100
-                    calcDiscount(item.price, item.sale)
-                  : item.price}
-                {item.price === 0 ? "" : " руб."}
+                <div className={styles.product__price}>
+                  {item.price === 0
+                    ? "Бесплатно"
+                    : item.sale
+                    ? // ? item.price - (item.price * item.sale) / 100
+                      calcDiscount(item.price, item.sale)
+                    : item.price}
+                  {item.price === 0 ? "" : " руб."}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </Link>

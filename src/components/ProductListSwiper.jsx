@@ -40,7 +40,7 @@ const ProductListSwiper = ({ title, products }) => {
         className={styles.mySwiper}
       >
         {products.map((item) => (
-          <SwiperSlide key={item.id}>
+          <SwiperSlide key={item._id}>
             <div className={styles.slide}>
               <Link to={`product/${item.productSlug}`}>
                 <div className={styles.slide__imgContainer}>

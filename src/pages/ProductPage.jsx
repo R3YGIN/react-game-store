@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import ProductPageDetails from "../components/ProductPageDetails";
 import PageTitle from "../components/UI/PageTitle";
-import { productsData } from "../data";
-import { addProduct } from "../redux/cartRedux";
+import { userOrders } from "../redux/apiCalls";
+import { publicRequest } from "../requestMethods";
 
 const ProductPage = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const productSlug = location.pathname.split("/")[2];
+  const user = useSelector((state) => state.user.currentUser);
+  const order = useSelector((state) => state.order);
+
   const [product, setProduct] = useState({
+    title: "",
     genre: [],
     slider: [],
     requirements: {
@@ -27,14 +32,21 @@ const ProductPage = () => {
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const res = await productsData.find(
-          (item) => item.productSlug === productSlug
-        );
-        setProduct(res);
+        const res = await publicRequest.get("/products/find/" + productSlug);
+        res.data ? setProduct(res.data) : navigate("/catalog");
       } catch (err) {}
     };
     getProduct();
   }, [productSlug]);
+
+  useEffect(() => {
+    user &&
+      !order.orders.length &&
+      userOrders(
+        dispatch,
+        JSON.parse(localStorage.getItem("currentUser"))?._id
+      );
+  }, []);
 
   return (
     <section>

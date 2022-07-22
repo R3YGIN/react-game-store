@@ -35,10 +35,12 @@ const Footer = () => {
           </ul>
         </div>
         <div className={styles.footer_upBtn}>
-          <ArrowCircleUp
-            className={styles.social__icon}
-            style={{ fontSize: "75px" }}
-          />
+          <a href="#header">
+            <ArrowCircleUp
+              className={styles.social__icon}
+              style={{ fontSize: "75px" }}
+            />
+          </a>
         </div>
       </div>
       <div>
@@ -47,41 +49,59 @@ const Footer = () => {
             <span>Ресурсы</span>
           </div>
           <ul className={styles.footer__list}>
-            <li className={styles.footer__link}>
-              <a href="#">Поддержка авторов</a>
+            <li>
+              <a href="#" className={styles.footer__link}>
+                Поддержка авторов
+              </a>
             </li>
-            <li className={styles.footer__link}>
-              <a href="#">Публикация</a>
+            <li>
+              <a href="#" className={styles.footer__link}>
+                Публикация
+              </a>
             </li>
-            <li className={styles.footer__link}>
-              <a href="#">Вакансии</a>
+            <li>
+              <a href="#" className={styles.footer__link}>
+                Вакансии
+              </a>
             </li>
-            <li className={styles.footer__link}>
-              <a href="#">Компания</a>
+            <li>
+              <a href="#" className={styles.footer__link}>
+                Компания
+              </a>
             </li>
           </ul>
           <ul className={styles.footer__list}>
-            <li className={styles.footer__link}>
-              <a href="#">Правила неофициальных материалов</a>
+            <li>
+              <a href="#" className={styles.footer__link}>
+                Правила неофициальных материалов
+              </a>
             </li>
-            <li className={styles.footer__link}>
-              <a href="#">Исследования пользовательского опыта</a>
+            <li>
+              <a href="#" className={styles.footer__link}>
+                Исследования пользовательского опыта
+              </a>
             </li>
-            <li className={styles.footer__link}>
-              <a href="#">
+            <li>
+              <a href="#" className={styles.footer__link}>
                 Лицензионное соглашение с конечным пользователем магазина
               </a>
             </li>
           </ul>
           <ul className={styles.footer__list}>
-            <li className={styles.footer__link}>
-              <a href="#">Сетевые службы</a>
+            <li>
+              <a href="#" className={styles.footer__link}>
+                Сетевые службы
+              </a>
             </li>
-            <li className={styles.footer__link}>
-              <a href="#">Правила сообщества</a>
+            <li>
+              <a href="#" className={styles.footer__link}>
+                Правила сообщества
+              </a>
             </li>
-            <li className={styles.footer__link}>
-              <a href="#">Newsroom</a>
+            <li>
+              <a href="#" className={styles.footer__link}>
+                Newsroom
+              </a>
             </li>
           </ul>
         </div>
@@ -90,25 +110,37 @@ const Footer = () => {
             <span>Сотрудничество</span>
           </div>
           <ul className={styles.footer__list}>
-            <li className={styles.footer__link}>
-              <a href="#">Сетевые службы</a>
+            <li>
+              <a href="#" className={styles.footer__link}>
+                Сетевые службы
+              </a>
             </li>
-            <li className={styles.footer__link}>
-              <a href="#">Правила сообщества</a>
+            <li>
+              <a href="#" className={styles.footer__link}>
+                Правила сообщества
+              </a>
             </li>
-            <li className={styles.footer__link}>
-              <a href="#">Newsroom</a>
+            <li>
+              <a href="#" className={styles.footer__link}>
+                Newsroom
+              </a>
             </li>
           </ul>
           <ul className={styles.footer__list}>
-            <li className={styles.footer__link}>
-              <a href="#">Сетевые службы</a>
+            <li>
+              <a href="#" className={styles.footer__link}>
+                Сетевые службы
+              </a>
             </li>
-            <li className={styles.footer__link}>
-              <a href="#">Правила сообщества</a>
+            <li>
+              <a href="#" className={styles.footer__link}>
+                Правила сообщества
+              </a>
             </li>
-            <li className={styles.footer__link}>
-              <a href="#">Newsroom</a>
+            <li>
+              <a href="#" className={styles.footer__link}>
+                Newsroom
+              </a>
             </li>
           </ul>
         </div>

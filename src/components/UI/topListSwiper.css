@@ -6,7 +6,7 @@
 }
 
 .top__title {
-  color: #f5f5f5;
+  color: var(--text);
   font-size: 18px;
   font-weight: 500;
 }

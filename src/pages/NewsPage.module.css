@@ -1,0 +1,24 @@
+.content {
+  margin-bottom: 5vw;
+}
+
+.content__imgContainer {
+  width: 100%;
+  height: 30vw;
+  margin-bottom: 1vw;
+  border-radius: 1vw;
+  overflow: hidden;
+}
+
+.content__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content__textContainer {
+}
+
+.content__text {
+  color: var(--text);
+}

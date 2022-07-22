@@ -2,6 +2,7 @@ import { CardGiftcard } from "@mui/icons-material";
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./FreeGamesBlock.module.css";
+import SecretImg from "../assets/img/homaPage/FreeBlock_secretImg.webp";
 
 const FreeGamesBlock = ({ freeGame }) => {
   return (
@@ -43,7 +44,7 @@ const FreeGamesBlock = ({ freeGame }) => {
         <div className={styles.free__game}>
           <div className={styles.game__img}>
             <img
-              src="http://unsplash.it/1920/450"
+              src={SecretImg}
               alt="Free Game"
               loading="lazy"
               className={styles.img}

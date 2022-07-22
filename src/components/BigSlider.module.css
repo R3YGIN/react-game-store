@@ -1,6 +1,6 @@
 .slider {
   padding: 32px 0;
-  color: #fff;
+  color: var(--bigSliderBtn);
 }
 .slider .swiper__container1 {
   width: 100%;

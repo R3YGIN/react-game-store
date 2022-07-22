@@ -1,21 +1,81 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PageTitle from "../components/UI/PageTitle";
 import styles from "./Cart.module.css";
 import Discount from "../components/UI/Discount";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct } from "../redux/cartRedux";
 import { Check } from "@mui/icons-material";
 import { calcDiscount } from "../data";
+import { userRequest } from "../requestMethods";
+import { purchase, updateCart } from "../redux/apiCalls";
+import StripeCheckout from "react-stripe-checkout";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleDeleteFromCart = (item) => {
-    dispatch(deleteProduct(item));
+  // Удаление из карзины
+  const updatedCartData = {
+    userId: JSON.parse(localStorage.getItem("currentUser"))?._id,
+    products: cart.products.length
+      ? [
+          ...cart.products.map((item) => ({
+            productId: item._id,
+            productSlug: item.productSlug,
+          })),
+        ]
+      : [],
   };
+
+  // Оплата
+  const KEY = process.env.REACT_APP_STRIPE;
+  const [stripeToken, setStripeToken] = useState(null);
+
+  const onToken = (token) => {
+    setStripeToken(token);
+  };
+
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const res = await userRequest.post("/checkout/payment", {
+          tokenId: stripeToken.id,
+          amount: cart.subtotal * 100,
+        });
+        purchase(
+          dispatch,
+          {
+            userId: JSON.parse(localStorage.getItem("currentUser"))?._id,
+            products: [...cart.info], //В массив передаем инфу о продукте/продуктах
+            amount: cart.subtotal,
+          },
+          cart,
+          JSON.parse(localStorage.getItem("currentUser"))
+        );
+        setStripeToken(null);
+        console.log("ОПЛАТА ПРОШЛА УСПЕШНО -", res.data);
+      } catch (err) {
+        console.log("ОШИБКА ОПЛАТЫ -", err);
+      }
+    };
+    stripeToken && makeRequest();
+  }, [stripeToken]);
+
+  const handleDeleteFromCart = !cart.isFetching
+    ? async (e) => {
+        updatedCartData.products = await updatedCartData.products?.filter(
+          (item) => item.productSlug !== e.target.dataset.product
+        );
+        console.log(updatedCartData);
+        await updateCart(
+          dispatch,
+          cart.id,
+          updatedCartData,
+          JSON.parse(localStorage.getItem("currentUser"))
+        );
+      }
+    : null;
 
   return (
     <section>
@@ -26,7 +86,7 @@ const Cart = () => {
             <div className={styles.cart__products}>
               {/* ----Product */}
               {cart.products.map((item) => (
-                <div className={styles.cart__product} key={item.id}>
+                <div className={styles.cart__product} key={item._id}>
                   <Link
                     to={`/product/${item.productSlug}`}
                     className={styles.cart__imgContainer}
@@ -83,7 +143,8 @@ const Cart = () => {
                       </Link>
                       <button
                         className={styles.cart__btn}
-                        onClick={() => handleDeleteFromCart(item)}
+                        data-product={item.productSlug}
+                        onClick={(e) => handleDeleteFromCart(e)}
                       >
                         Удалить
                       </button>
@@ -145,7 +206,17 @@ const Cart = () => {
                 </div>
               </div>
 
-              <button className={styles.summary__brn}>Оформить заказ</button>
+              <StripeCheckout
+                name="GAME STORE"
+                image="http://unsplash.it/375/375"
+                currency="RUB"
+                description={`Итого к оплате ${cart.subtotal}руб.`}
+                amount={cart.subtotal * 100}
+                token={onToken}
+                stripeKey={KEY}
+              >
+                <button className={styles.summary__brn}>Оформить заказ</button>
+              </StripeCheckout>
             </div>
             {/* aside */}
           </>

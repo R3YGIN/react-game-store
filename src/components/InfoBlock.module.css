@@ -48,13 +48,13 @@
 }
 
 .info__textTitle {
-  color: #f5f5f5;
+  color: var(--text);
   font-size: 22px;
   font-weight: 500;
 }
 
 .info__text {
-  color: #f5f5f599;
+  color: var(--textDarker);
   font-size: 16px;
   font-weight: 500;
 }
@@ -64,7 +64,7 @@
 
 .info__btn {
   padding: 15px 30px;
-  background-color: #fff;
+  background-color: var(--infoBlockBtn);
   border-radius: 5px;
   font-size: 14px;
   font-weight: 500;

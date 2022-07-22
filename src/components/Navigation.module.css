@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
   z-index: 9;
-  background-color: #121212;
+  background-color: var(--bgc);
   font-size: 0.8vw;
   font-weight: 700;
 }
@@ -20,12 +20,13 @@
 }
 
 .search__group {
-  background-color: #202020;
+  background-color: var(--searchBgc);
   height: 2vw;
   width: 80%;
   border-radius: 24px;
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .search__btn {
@@ -44,8 +45,44 @@
   height: 100%;
   width: 100%;
   flex: 4;
-  color: #f5f5f5;
+  color: var(--text);
   outline: none;
+}
+
+.search__result {
+  position: absolute;
+  width: 100%;
+  top: 120%;
+  background-color: var(--searchBgc);
+  color: var(--text);
+  border-radius: 0.5vw;
+  padding: 0.5vw;
+  border-bottom: 0.2vw solid #0078f2;
+  display: none;
+}
+
+.search__resultName {
+  padding: 0.5vw 0;
+  cursor: pointer;
+}
+
+.search__resultBtn {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0.5vw 0;
+}
+
+.search__resultName:hover,
+.search__resultBtn:hover {
+  text-decoration: underline;
+}
+
+.search__input:focus ~ .search__result {
+  display: block;
 }
 
 .nav {
@@ -73,21 +110,21 @@
 }
 .nav__link.active,
 .nav__link:hover {
-  color: #f5f5f5;
+  color: var(--text);
 }
 
 .nav__link_active {
   display: inline-block;
   padding: 1vw;
-  color: #f5f5f5;
+  color: var(--text);
   transition: color 0.3s;
   display: flex;
   align-items: center;
 }
 
 .cart__quantity {
-  color: #121212;
-  background-color: #f5f5f5;
+  color: var(--bgc);
+  background-color: var(--text);
   margin-left: 0.5vw;
   padding: 0.25vw 0.5vw;
   border-radius: 0.75vw;

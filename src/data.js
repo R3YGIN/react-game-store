@@ -1,95 +1,240 @@
+import GenreAction from "./assets/img/genresSlider/GenreAction.webp";
+import GenreCasual from "./assets/img/genresSlider/GenreCasual.webp";
+import GenreHorror from "./assets/img/genresSlider/GenreHorror.webp";
+import GenreIndie from "./assets/img/genresSlider/GenreIndie.webp";
+
 export const calcDiscount = (price, sale) =>
   Math.round(price - (price * sale) / 100);
 
+export const lightMode = {
+  "--bgc": "#fcfcfc",
+  "--text": "#1f304b",
+  "--textDarker": "#1f304b99",
+  "--headerBgc": "#ebebeb",
+  "--textHeader": "#272d2f",
+  "--footerBgc": "#ebebeb",
+  "--textFooter": "#272d2f",
+  "--textFooterTitle": "#131313",
+  "--genreListBgc": "#ccc",
+  "--searchBgc": "#ebebeb",
+  "--swiperBtnBgc": "#ccc",
+  "--cartItemBgc": "#ccc",
+
+  "--freeGameBgc": "#ccc",
+  "--infoBlockBtn": "#afafaf",
+  "--bigSliderBtn": "#1f304b",
+  "--sysRequBgc": "#afafaf",
+  "--productTypeBgc": "#afafaf",
+  "--loginPageBgc": "#ccc",
+  "--loginInputBgc": "#ebebeb",
+};
+
+export const darkMode = {
+  "--bgc": "#121212",
+  "--text": "#f5f5f5",
+  "--textDarker": "#f5f5f599",
+  "--headerBgc": "#2a2a2a",
+  "--textHeader": "#cccccc",
+  "--footerBgc": "#202020",
+  "--textFooter": "#cccccc",
+  "--textFooterTitle": "#656565",
+  "--genreListBgc": "#1f1f1f",
+  "--searchBgc": "#202020",
+  "--swiperBtnBgc": "#2b2b2b",
+  "--cartItemBgc": "#202020",
+
+  "--freeGameBgc": "#2a2a2a",
+  "--infoBlockBtn": "#fff",
+  "--bigSliderBtn": "#fff",
+  "--sysRequBgc": "#262626",
+  "--productTypeBgc": "#373737",
+  "--loginPageBgc": "#202020",
+  "--loginInputBgc": "#373737",
+};
+
 export const sorting = [
   {
-    id: "sorting111",
+    id: "sorting111fwe",
     name: "По умолчанию",
     value: "default",
   },
   {
-    id: "sorting222",
+    id: "sorting222ascv",
     name: "По цене",
     value: "price",
   },
   {
-    id: "sorting333",
+    id: "sorting333wabs",
     name: "По дате",
     value: "newest",
+  },
+];
+
+export const sortingLibrary = [
+  {
+    id: "sorting444fwe",
+    name: "По умолчанию",
+    value: "default",
+  },
+  {
+    id: "sorting555ascv",
+    name: "По алфавиту",
+    value: "alphabet",
   },
 ];
 
 export const filters = [
   {
     id: "filter1",
-    name: "ЦЕНА",
+    title: "ЦЕНА",
     details: [
-      "Бесплатно",
-      "Ниже 300 руб",
-      "Ниже 1000 руб",
-      "Ниже 3000 руб",
-      "3000 руб и выше",
-      "Со скидкой",
+      {
+        name: "Бесплатно",
+        type: "price",
+        value: 0,
+      },
+      {
+        name: "Ниже 300 руб",
+        type: "price",
+        value: 300,
+      },
+      {
+        name: "Ниже 1000 руб",
+        type: "price",
+        value: 1000,
+      },
+      {
+        name: "Ниже 3000 руб",
+        type: "price",
+        value: 3000,
+      },
+      {
+        name: "Со скидкой",
+        type: "sale",
+        value: false,
+      },
     ],
   },
   {
     id: "filter2",
-    name: "ЖАНР",
+    title: "ЖАНР",
     details: [
-      "Викторина",
-      "Выживание",
-      "Головоломка",
-      "Гонки",
-      "Групповая",
-      "Инди",
-      "Исследования",
-      "Казуальная",
-      "От первого лица",
-      "Открытый мир",
-      "Приключения",
-      "Ролевая",
-      "Симулятор",
-      "Стелс",
-      "Стратегия",
-      "Хоррор",
-      "Шутер",
-      "Экшен",
+      {
+        name: "Выживание",
+        type: "genre",
+        value: "survival",
+      },
+      {
+        name: "Головоломка",
+        type: "genre",
+        value: "puzzle",
+      },
+      {
+        name: "Гонки",
+        type: "genre",
+        value: "racing",
+      },
+      {
+        name: "Инди",
+        type: "genre",
+        value: "indie",
+      },
+      {
+        name: "Исследования",
+        type: "genre",
+        value: "exploration",
+      },
+      {
+        name: "Казуальная",
+        type: "genre",
+        value: "casual",
+      },
+      {
+        name: "От первого лица",
+        type: "genre",
+        value: "firstPerson",
+      },
+      {
+        name: "Открытый мир",
+        type: "genre",
+        value: "openWorld",
+      },
+      {
+        name: "Приключения",
+        type: "genre",
+        value: "adventure",
+      },
+      {
+        name: "Ролевая",
+        type: "genre",
+        value: "rpg",
+      },
+      {
+        name: "Симулятор",
+        type: "genre",
+        value: "simulation",
+      },
+      {
+        name: "Стелс",
+        type: "genre",
+        value: "stealth",
+      },
+      {
+        name: "Стратегия",
+        type: "genre",
+        value: "strategy",
+      },
+      {
+        name: "Хоррор",
+        type: "genre",
+        value: "horror",
+      },
+      {
+        name: "Шутер",
+        type: "genre",
+        value: "shooter",
+      },
+      {
+        name: "Экшен",
+        type: "genre",
+        value: "action",
+      },
     ],
   },
 ];
 
 export const mainSlider = [
-  "https://picsum.photos/1920/1080",
-  "https://picsum.photos/1920/1081",
-  "https://picsum.photos/1920/1082",
-  "https://picsum.photos/1920/1083",
-  "https://picsum.photos/1920/1084",
+  "https://loremflickr.com/1920/1080/assassins",
+  "https://loremflickr.com/1920/1081/assassins",
+  "https://loremflickr.com/1920/1082/assassins",
+  "https://loremflickr.com/1920/1083/assassins",
+  "https://loremflickr.com/1920/1084/assassins",
 ];
 
 export const genreListSlides = [
   {
     id: "glsid1",
     name: "Экшен",
-    link: "/catalog",
-    img: "http://unsplash.it/500/301",
+    value: "action",
+    img: GenreAction,
   },
   {
     id: "glsid2",
     name: "Казуальная",
-    link: "/catalog",
-    img: "http://unsplash.it/500/302",
+    value: "casual",
+    img: GenreCasual,
   },
   {
     id: "glsid3",
     name: "Хоррор",
-    link: "/catalog",
-    img: "http://unsplash.it/500/303",
+    value: "horror",
+    img: GenreHorror,
   },
   {
     id: "glsid4",
     name: "Инди",
-    link: "/catalog",
-    img: "http://unsplash.it/500/304",
+    value: "indie",
+    img: GenreIndie,
   },
 ];
 

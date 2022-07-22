@@ -1,5 +1,5 @@
 .main__container {
-  background-color: #121212;
+  background-color: var(--bgc);
 }
 
 .main {

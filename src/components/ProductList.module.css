@@ -1,5 +1,11 @@
 .container {
   display: flex;
+  position: relative;
+}
+
+.anchor {
+  position: absolute;
+  top: -5vw;
 }
 
 .catalog {

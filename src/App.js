@@ -5,9 +5,46 @@ import Catalog from "./pages/Catalog";
 import Cart from "./pages/Cart";
 import ProductPage from "./pages/ProductPage";
 import LoginPage from "./pages/LoginPage";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { userCart, userOrders } from "./redux/apiCalls";
+import Library from "./pages/Library";
+import Account from "./pages/Account";
+import NewsList from "./pages/NewsList";
+import NewsPage from "./pages/NewsPage";
 
 function App() {
-  const user = false;
+  const user = useSelector((state) => state.user.currentUser);
+  const order = useSelector((state) => state.order);
+  const cart = useSelector((state) => state.cart);
+  if (
+    user &&
+    cart?.id &&
+    !cart?.isFetching &&
+    !order?.isFetching &&
+    !JSON.parse(localStorage.getItem("currentUser"))
+  )
+    window.location.reload(); //Найти другой метод
+  const dispatch = useDispatch();
+
+  //Загрузка данных пользователя
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("currentUser"))?._id) {
+      const getData = async () => {
+        await userCart(
+          dispatch,
+          JSON.parse(localStorage.getItem("currentUser"))?._id,
+          JSON.parse(localStorage.getItem("currentUser"))?.accessToken
+        );
+        await userOrders(
+          dispatch,
+          JSON.parse(localStorage.getItem("currentUser"))?._id,
+          JSON.parse(localStorage.getItem("currentUser"))?.accessToken
+        );
+      };
+      getData();
+    }
+  }, []);
 
   return (
     <BrowserRouter>
@@ -17,7 +54,17 @@ function App() {
           <Route path="catalog" element={<Catalog />} />
           <Route path="catalog/:category" element={<Catalog />} />
           <Route path="cart" element={<Cart />} />
+          <Route
+            path="library"
+            element={user ? <Library /> : <Navigate to="/" />}
+          />
+          <Route
+            path="account"
+            element={user ? <Account /> : <Navigate to="/" />}
+          />
           <Route path="product/:id" element={<ProductPage />} />
+          <Route path="news" element={<NewsList />} />
+          <Route path="news/:id" element={<NewsPage />} />
         </Route>
         <Route
           path="login"
